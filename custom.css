@@ -1,0 +1,19 @@
+body, .ant-layout {
+    /* The background color of the preview. */
+    background-color: #FAFAFA;
+  }
+  body,
+  h1,
+  h2,
+  h3,
+  h4 {
+    /* Text color for the text, not including links. */
+    color: #000000;
+  }
+  
+  a,
+  a:hover,
+  a:active {
+    /** Color for links, except ones that have been already visited. */
+    color: #54b0f2;
+  }
