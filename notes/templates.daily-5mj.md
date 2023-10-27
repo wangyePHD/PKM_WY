@@ -19,18 +19,18 @@ Based on the journaling method created by Intelligent Change:
 - [x]  每日论文阅读
 - [ ]   
 
-### **备忘记录**
+## **备忘记录**
 - [ ] 总结LoRA
 - [ ] 其他
 
-### **问题记录**
+## **问题记录**
 
 1.
 2.
 3.
 
 
-### **今日总结**
+## **今日总结**
 
 1.
 2.
