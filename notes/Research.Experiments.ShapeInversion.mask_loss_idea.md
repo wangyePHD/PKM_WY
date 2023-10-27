@@ -40,7 +40,7 @@ created: 1698405283881
 ![图 3](assets/images/135af74aac9b6ecc78c79c6940f729230bc3b4c2d9525e9bc9af58c646ffaacc.png)  
 从上述实验结果来看，Mask Loss约束下的*s的编辑能力和原始的baseline相比，有所下降。所以从目前俩看，shape identity的保持和Editing的能力之间存在Trade Off。
 
-### **实验四：*s 真的学到了Shape信息了吗？**
+### **实验四：\*s 真的学到了Shape信息了吗？**
 我们这里采用直接将*s生成出来，看一下效果。
 ![图 4](assets/images/ec16d4162ad3e73b3bb25b48c4b0ebc5e26b98c1cfeedc393673a6351511cd67.png)  
 
