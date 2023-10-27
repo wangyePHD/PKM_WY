@@ -7,8 +7,6 @@ created: 1698405283881
 ---
 
 
-
-
 ## **实验概述**
 本实验是在[[Research.Experiments.ShapeInversion.e4t_baseline_exp]]的基础上，添加Mask Loss，同时研究不同weight下的Mask Loss，对实验的影响。
 （注意baseline实验指的是，prompt是... chair in the shape of *s）
@@ -47,6 +45,16 @@ created: 1698405283881
 如果只是从结果上来看，Mask Loss实验得到的结果确实要比baseline的结果好太多。
 但是我目前还是怀疑，*s中包含的信息不只是shape。
 
+### **实验五：受限的editing能力和Mask Loss Weight有关系吗？**
+我们分别训练了**weight=0.01, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0**下的，对三个文本的生成能力。第一列是原始的base prompt：“**a photo of chair in the shape of \*s**”, 第二列是编辑文本1“**a leopard-print chair in the shape of \*s**”，第三列是编辑文本2 "**a red chair in the shape of \*s**"。
+![图 7](assets/images/476bfd24f37bd4d90bb912530331b0f9fd07b40986fe6237afe5f3e4e790e000.png)  
+![图 5](assets/images/e5cab0905f22a1f0a57ab7566f2fdeb480d44ef62e578d5c2387a9cb82fab482.png)  
+![图 6](assets/images/f6d3353511338d82da302bf47d3a25e2ad3c3be23b1b838d3ebcde5e506b888f.png)  
+
+**分析如下：**
+* 我们发现，Mask Loss weight过大的话，网络就会把*s学成mask的样子，而忽略了原始的图像内容，因此需要一个较小的weight获得一个trade off。我们发现0.1目前的效果还不错。
+* 无论是哪个weight，我们发现第二列、第三列的编辑结果和E4T相比，edit的程度都受限制。尤其是豹纹这一列。
+* limited editing能力可能还需要分析Mask Loss的机制
 
 ---
 ## **实验结论**
@@ -56,7 +64,6 @@ created: 1698405283881
 2. **Mask Loss Weight不能太大**，我们对比了两组0.1和1.0，发现0.1更好些，过大的weight，会导致模型过于专注于学习mask-shape，而忽略了本身物体的内容。
 
 3. **Mask Loss虽然保持了很好的shape Identity，但是对于editing的自由度可能有一些牺牲。（有待进一步确定）**
-
 
 
 
