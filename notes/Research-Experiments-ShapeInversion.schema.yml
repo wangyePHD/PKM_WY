@@ -1,0 +1,13 @@
+version: 1
+imports: []
+schemas:
+  - id: Research
+    title: Research
+    parent: root
+    children:
+      - pattern: '*'
+        children:
+          - pattern: '*'
+            children:
+              - pattern: '*'
+                template: templates.experiments
