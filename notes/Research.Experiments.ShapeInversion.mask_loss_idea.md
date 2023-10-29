@@ -2,7 +2,7 @@
 id: k4av03qicinhoiqri4f3twi
 title: mask_loss_idea
 desc: ''
-updated: 1698405283881
+updated: 1698478979385
 created: 1698405283881
 ---
 
@@ -17,7 +17,6 @@ created: 1698405283881
 ## **实验代码及训练细节**
 1. Wandb训练细节及代码备份：[https://wandb.ai/wangye889905/shapeinversion_baseline_v2_mask_loss_idea?workspace=user-wangye889905](https://wandb.ai/wangye889905/shapeinversion_baseline_v2_mask_loss_idea?workspace=user-wangye889905)
 2. github release代码备份：[https://github.com/wangyePHD/ShapeInversion/releases/tag/Mask_Loss_Idea](https://github.com/wangyePHD/ShapeInversion/releases/tag/Mask_Loss_Idea)
-
 
 
 
@@ -47,7 +46,7 @@ created: 1698405283881
 
 ### **实验五：受限的editing能力和Mask Loss Weight有关系吗？**
 我们分别训练了**weight=0.01, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0**下的，对三个文本的生成能力。第一列是原始的base prompt：“**a photo of chair in the shape of \*s**”, 第二列是编辑文本1“**a leopard-print chair in the shape of \*s**”，第三列是编辑文本2 "**a red chair in the shape of \*s**"。
-![图 7](assets/images/476bfd24f37bd4d90bb912530331b0f9fd07b40986fe6237afe5f3e4e790e000.png)  
+![图 8](assets/images/158beaeab141570086c0153816500ef6c71adcefa41f7826b23740e5fbc1010a.png)  
 ![图 5](assets/images/e5cab0905f22a1f0a57ab7566f2fdeb480d44ef62e578d5c2387a9cb82fab482.png)  
 ![图 6](assets/images/f6d3353511338d82da302bf47d3a25e2ad3c3be23b1b838d3ebcde5e506b888f.png)  
 
