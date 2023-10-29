@@ -2,7 +2,7 @@
 id: 2qvfch5avja7cxvuo2chkhi
 title: domain_tuning_mask_loss
 desc: ''
-updated: 1698597268898
+updated: 1698598785430
 created: 1698587676610
 ---
 - [**实验概述**](#实验概述)
@@ -26,6 +26,9 @@ created: 1698587676610
 ![图 0](assets/images/70932dc025273bab825257218969804597d4c53e2d736cff072963925c6d4b4d.png)  
 
 ![图 1](assets/images/6a0d404ce11664e244c95a245a0dc2c3f7a8c3963e0208807b9b7d52b840c5fb.png)  
+
+![图 2](assets/images/702da9006133064ed0dd8471d3dcd690cf046aaf6805f36d6afe49175762d563.png)  
+
 
 
 
