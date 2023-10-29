@@ -2,7 +2,7 @@
 id: pau3z34upm57il00eap8g8e
 title: '2023-10-29'
 desc: ''
-updated: 1698586934017
+updated: 1698597372265
 created: 1698553357073
 traitIds:
   - journalNote
@@ -61,6 +61,7 @@ Based on the journaling method created by Intelligent Change:
 * **2023年10月29日21:29:42 Domain tuning的秘密：**
   * 其实今天我在测模型的时候，突然想到E4T架构下，在pre-training之后，还需要对单图像进行domain-tuning。我在训练ShapeInversion的时候，同时引入了Mask loss Idea，而且Mask Loss Idea是在Pre-training和domain-tuning都存在的，而Mask Loss idea的作用是进一步强化*s表达shape。因此，在pre-training阶段添加Mask Loss，是合理的。<font color="red">**但是在单图像的domain-tuning的时候，可能就会严重过拟合到mask上，导致编辑能力变差。**</font> 目前只能给出这样的解释，具体请看实验：
 
+* 是不是Mask Loss可以在初期阶段使用，后期不用呢？而不是现在的这种全用或者全不用
 
 
 ## **问题记录**
