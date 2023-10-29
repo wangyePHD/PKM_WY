@@ -2,7 +2,7 @@
 id: pau3z34upm57il00eap8g8e
 title: '2023-10-29'
 desc: ''
-updated: 1698562457884
+updated: 1698580177367
 created: 1698553357073
 traitIds:
   - journalNote
@@ -29,6 +29,8 @@ Based on the journaling method created by Intelligent Change:
 - [ ]  Image-translation论文整理
 - [ ]  Image Editing论文整理
 - [ ]  Text Inversion论文整理
+- [ ]  bitsandbytes 调研 这是个啥玩意
+  - [ ]  https://mp.weixin.qq.com/s/QKSa3anGP4JYPDfn9_coDg
 
 ### <font color=#871F78>**不重要紧急**</font>
 

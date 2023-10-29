@@ -2,7 +2,7 @@
 id: 1itmvrsd419mgpb3vxg41rb
 title: 如何利用wandb高效管理Deep Learning实验？
 desc: ''
-updated: 1698568754954
+updated: 1698585839854
 created: 1698562365814
 ---
 - [**Wandb简介**](#wandb简介)
@@ -15,7 +15,7 @@ created: 1698562365814
   - [**注册账户**](#注册账户)
   - [**安装Wandb**](#安装wandb)
   - [**开始使用**](#开始使用)
-- [**Pytorch+Wandb实现高效实验管理**](#pytorchwandb实现高效实验管理)
+- [**Pytorch+Wandb+argparse实现高效实验管理**](#pytorchwandbargparse实现高效实验管理)
 
 ---
 
@@ -125,5 +125,197 @@ OK，现在可以打开链接看一下我们的实验是怎么被记录的。
 
 注：访问[链接](https://wandb.ai/wangye889905/my-awesome-project?workspace=user-wangye889905)，可查看上述实验结果。
 
-## **Pytorch+Wandb实现高效实验管理**
-ToDo
+## **Pytorch+Wandb+argparse实现高效实验管理**
+* Pytorch负责构建网络代码，训练等
+* Wandb负责高效实验管理
+* argparse负责灵活的实验参数配置
+
+我们先通过伪代码的形式，感受一下具体的流程：
+```python
+
+# import the wandb,torch, argparse and others
+import wandb
+import torch
+import argparse
+
+# 登录
+wandb.login()
+# 初始化一个project，请指定project-name
+wandb.init(project="new-sota-model")
+
+# 添加实验参数
+parser = argparse.ArgumentParser(description="Simple example of a training script.")
+parser.add_argument("--mask_loss_lambda", type=float, default=1.0, help="Mask loss scale.")
+parser.add_argument("--self_or_cross", type=float, default=1.0, help="1.0:cross-attention map, 0.0:self-attention map")
+args = parser.parse_args()
+
+# 将实验参数注册至wandb.config
+wandb.config = vars(args)
+
+# load你的模型和数据
+model, dataloader = get_model(), get_data()
+
+# 跟踪模型的梯度信息
+wandb.watch(model)
+
+# Training Loop
+for batch in dataloader:
+  metrics = model.training_step()
+  # log metrics inside your training loop to visualize model performance
+  wandb.log(metrics)
+
+# 保存模型
+torch.save(model)
+```
+
+接下来是完整的代码示例：
+
+```python
+from __future__ import print_function
+
+import argparse
+# workaround to fetch MNIST data
+import os
+import sys
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+import torchvision
+import wandb
+from torchvision import datasets, transforms
+
+
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
+        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
+        self.conv2_drop = nn.Dropout2d()
+        self.fc1 = nn.Linear(320, 50)
+        self.fc2 = nn.Linear(50, 10)
+
+    def forward(self, x):
+        x = F.relu(F.max_pool2d(self.conv1(x), 2))
+        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
+        x = x.view(-1, 320)
+        x = F.relu(self.fc1(x))
+        x = F.dropout(x, training=self.training)
+        x = self.fc2(x)
+        return F.log_softmax(x, dim=1)
+
+def main():
+
+    wandb.login()
+    # 配置你的project name
+    wandb.init(project="my_project")
+    # 备份你的代码
+    wandb.run.log_code('./',include_fn=lambda path: path.endswith(".py") or path.endswith(".ipynb"))
+    
+    
+    # Training settings
+    parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
+    parser.add_argument('--batch-size', type=int, default=64, metavar='N',
+                        help='input batch size for training (default: 64)')
+    parser.add_argument('--test-batch-size', type=int, default=1000, metavar='N',
+                        help='input batch size for testing (default: 1000)')
+    parser.add_argument('--epochs', type=int, default=10, metavar='N',
+                        help='number of epochs to train (default: 10)')
+    parser.add_argument('--lr', type=float, default=0.01, metavar='LR',
+                        help='learning rate (default: 0.01)')
+    parser.add_argument('--momentum', type=float, default=0.5, metavar='M',
+                        help='SGD momentum (default: 0.5)')
+    parser.add_argument('--no-cuda', action='store_true', default=False,
+                        help='disables CUDA training')
+    parser.add_argument('--seed', type=int, default=1, metavar='S',
+                        help='random seed (default: 1)')
+    parser.add_argument('--log-interval', type=int, default=10, metavar='N',
+                        help='how many batches to wait before logging training status')
+    args = parser.parse_args()
+    use_cuda = not args.no_cuda and torch.cuda.is_available()
+
+    # 将训练参数保存至wandb
+    wandb.config.update(args)
+
+    torch.manual_seed(args.seed)
+
+    device = torch.device("cuda" if use_cuda else "cpu")
+
+    kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
+    train_loader = torch.utils.data.DataLoader(
+        datasets.MNIST('./data', train=True, download=True,
+                       transform=transforms.Compose([
+                           transforms.ToTensor(),
+                           transforms.Normalize((0.1307,), (0.3081,))
+                       ])),
+        batch_size=args.batch_size, shuffle=True, **kwargs)
+    test_loader = torch.utils.data.DataLoader(
+        datasets.MNIST('./data', train=False, transform=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,))
+        ])),
+        batch_size=args.test_batch_size, shuffle=True, **kwargs)
+
+    model = Net().to(device)
+    optimizer = optim.SGD(model.parameters(), lr=args.lr,
+                          momentum=args.momentum)
+    
+    # 检测模型参数的梯度信息
+    wandb.watch(model)
+    
+    global_step = 0
+    for epoch in range(1, args.epochs + 1):
+        # training
+        model.train()
+        for batch_idx, (data, target) in enumerate(train_loader):
+            data, target = data.to(device), target.to(device)
+            optimizer.zero_grad()
+            output = model(data)
+            loss = F.nll_loss(output, target)
+            loss.backward()
+            optimizer.step()
+            global_step +=1
+            if batch_idx % args.log_interval == 0:
+                print('Train Epoch: {} [{}/{} ({:.0%})]\tLoss: {:.6f}'.format(epoch, batch_idx * len(data), len(train_loader.dataset),batch_idx / len(train_loader), loss.item()))
+                training_log = {
+                    "train/loss": loss.detach().item(),
+                }
+            # wandb 可视化训练损失（此处仅展示保存训练曲线）
+            wandb.log(training_log, step=global_step)    
+        
+        
+        model.eval()
+        test_loss = 0
+        correct = 0
+
+        example_images = []
+        with torch.no_grad():
+            for data, target in test_loader:
+                data, target = data.to(device), target.to(device)
+                output = model(data)
+                # sum up batch loss
+                test_loss += F.nll_loss(output, target, reduction='sum').item()
+                # get the index of the max log-probability
+                pred = output.max(1, keepdim=True)[1]
+                correct += pred.eq(target.view_as(pred)).sum().item()
+                example_images.append(wandb.Image(
+                    data[0], caption="Pred: {} Truth: {}".format(pred[0].item(), target[0])))
+
+        test_loss /= len(test_loader.dataset)
+        print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0%})\n'.format(
+            test_loss, correct, len(test_loader.dataset),
+            correct / len(test_loader.dataset)))
+        
+        test_log = {
+            "Test/Examples": example_images, # 保存测试图像
+            "Test/Accuracy": 100. * correct / len(test_loader.dataset), 
+            "Test/Loss": test_loss}
+        # 保存test可视化内容
+        wandb.log(test_log, step=global_step)
+
+
+if __name__ == '__main__':
+    main()
+
+```
