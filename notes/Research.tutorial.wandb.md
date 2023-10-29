@@ -2,7 +2,7 @@
 id: 1itmvrsd419mgpb3vxg41rb
 title: 如何利用wandb高效管理Deep Learning实验？
 desc: ''
-updated: 1698568339911
+updated: 1698568754954
 created: 1698562365814
 ---
 - [**Wandb简介**](#wandb简介)
@@ -123,7 +123,7 @@ OK，现在可以打开链接看一下我们的实验是怎么被记录的。
 
 <font color="red">**请注意，project和run是有区别的，project是一个总体的概念，比如你要验证学习率对模型的影响，这个时候你可以建立一个project，比如lr_project。为了验证lr的影响，你需要设置不同的lr，来跑实验，这里每个lr对应的实验，在Wandb中被称为是一次run。**</font>
 
-
+注：访问[链接](https://wandb.ai/wangye889905/my-awesome-project?workspace=user-wangye889905)，可查看上述实验结果。
 
 ## **Pytorch+Wandb实现高效实验管理**
 ToDo
