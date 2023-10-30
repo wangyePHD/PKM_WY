@@ -2,7 +2,7 @@
 id: rp6at1rwx97kr2h41lhjdja
 title: '2023-10-30'
 desc: ''
-updated: 1698633539855
+updated: 1698641688574
 created: 1698597327340
 traitIds:
   - journalNote
@@ -20,9 +20,11 @@ Based on the journaling method created by Intelligent Change:
 ### <font color=red>**重要紧急**</font>
 - [x]  每日Arxiv
 - [ ]  每日论文阅读
+- [ ]  测试一些案例，实验细节丰富好
 - [ ]  ShapeInversion 测试评估，思考进一步改进的方向
 - [ ]  Dual-branch架构设计，编码实现
 - [ ]  Research Proposal 相关文献整理
+- [ ]  完成5个番茄钟
 
 ### <font color=#871F78>**不重要紧急**</font>
 
@@ -33,6 +35,9 @@ Based on the journaling method created by Intelligent Change:
 ### <font color=blue>**重要不紧急**</font>
 
 - [ ] 昨日未完成事项，各种文献库的整理
+- [ ] 研究一下Vscode+Latex整合Overleaf
+  - [ ] https://medium.com/@rcpassos/writing-latex-documents-in-visual-studio-code-with-latex-workshop-d9af6a6b2815
+- [ ] markmap插件使用教程 整理
 
 ### <font color=green>**不重要不紧急**</font>
 

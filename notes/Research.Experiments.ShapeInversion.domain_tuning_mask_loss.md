@@ -29,6 +29,7 @@ created: 1698587676610
 
 ![图 2](assets/images/702da9006133064ed0dd8471d3dcd690cf046aaf6805f36d6afe49175762d563.png)  
 
+![图 3](assets/images/7f803689a455a020ec4f9d0392df77d8da439c9f7bb5b4cc122cbc42a47c0059.png)  
 
 
 
@@ -36,4 +37,4 @@ created: 1698587676610
 
 ## **实验结论**
 
-
+* 从上述实验结果来看，domain-tuning stage确实不能使用Mask Loss，因为这个loss会限制模型只学习和shape有关系的内容，最终过拟合，无法实现编辑等操作。

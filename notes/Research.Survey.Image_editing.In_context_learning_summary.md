@@ -2,7 +2,7 @@
 id: v7i7mck1icfbsi34nwglmi6
 title: In_context_learning_summary
 desc: ''
-updated: 1698634127055
+updated: 1698641535896
 created: 1698633069021
 ---
 <!--
@@ -17,6 +17,7 @@ Based on the journaling method created by Intelligent Change:
 
 ## **本领域文章概览**
 
+Visual In-context learning代表性工作如下：
 
 | **标题**                                                                                  | **一句话总结** | **Motivation** | **方法 Insights** | **发表时间** | **链接** | **详情** | **其他** |
 | :------------------------------------------------------------------------------------------ | ---------------- | ---------------- | :-----------------: | :------------- | ---------- | :--------: | :--------: |
@@ -29,6 +30,6 @@ Based on the journaling method created by Intelligent Change:
 
 ### **文献树**
 
-这是文献树
+[[Research.Paper.Tree.In_context_learning]]
 
 ### **Insights-Chanllenge-Tree**
