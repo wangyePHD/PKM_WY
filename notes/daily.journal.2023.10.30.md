@@ -2,7 +2,7 @@
 id: rp6at1rwx97kr2h41lhjdja
 title: '2023-10-30'
 desc: ''
-updated: 1698597327340
+updated: 1698633539855
 created: 1698597327340
 traitIds:
   - journalNote
@@ -19,19 +19,20 @@ Based on the journaling method created by Intelligent Change:
 
 ### <font color=red>**重要紧急**</font>
 - [x]  每日Arxiv
-- [x]  每日论文阅读
-- [ ]  实验安排
+- [ ]  每日论文阅读
+- [ ]  ShapeInversion 测试评估，思考进一步改进的方向
+- [ ]  Dual-branch架构设计，编码实现
+- [ ]  Research Proposal 相关文献整理
 
 ### <font color=#871F78>**不重要紧急**</font>
 
-- [ ] 学院填表 
+- [ ] 无
 
 
 
 ### <font color=blue>**重要不紧急**</font>
 
-- [ ] 学习Huggingface Accelerate新技术
-
+- [ ] 昨日未完成事项，各种文献库的整理
 
 ### <font color=green>**不重要不紧急**</font>
 
@@ -46,13 +47,5 @@ Based on the journaling method created by Intelligent Change:
 
 ## **问题记录**
 
-1.
-2.
-3.
-
 
 ## **今日总结**
-
-1.
-2.
-3.
