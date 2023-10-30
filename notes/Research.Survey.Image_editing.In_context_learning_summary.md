@@ -30,6 +30,11 @@ Visual In-context learning代表性工作如下：
 
 ### **文献树**
 
-[[Research.Paper.Tree.In_context_learning]]
+请注意，下页面脑图需要用markmap插件预览打开，详见下图
+
+![图 0](assets/images/3841a2ae18216014fe9b20bbd18e94e43cb084edbd1deb92a1f653ea871c3c32.png)  
+
+[[Visual In-context learing脑图|Research.Paper.Tree.In_context_learning]]
+
 
 ### **Insights-Chanllenge-Tree**
