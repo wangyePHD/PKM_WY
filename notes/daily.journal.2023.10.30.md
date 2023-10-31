@@ -2,7 +2,7 @@
 id: rp6at1rwx97kr2h41lhjdja
 title: '2023-10-30'
 desc: ''
-updated: 1698668297653
+updated: 1698682321084
 created: 1698597327340
 traitIds:
   - journalNote
@@ -27,7 +27,7 @@ Based on the journaling method created by Intelligent Change:
 - [ ]  Dual-branch架构设计，编码实现
 - [ ]  Research Proposal 相关文献整理
 - [x]  整理Inversion benchmark信息
-- [ ]  完成5个番茄钟
+- [x]  完成5个番茄钟
 
 ### <font color=#871F78>**不重要紧急**</font>
 
@@ -52,8 +52,9 @@ Based on the journaling method created by Intelligent Change:
 
 ## **工作笔记**
 * 2023年10月30日15:19:59 ShapeInversion 下一步要做的事情
-  * 广度拓展，尝试更多数据集的训练，比如cat dog等
-  * 深度拓展，尝试appearance的反转，类似于 in the shape of, 构造in the appearance of
+  * 探索contrastive learning idea是否有效 **代码写完跑上了实验**
+  * 广度拓展，尝试更多数据集的训练，比如cat dog等，**数据集下载完毕**
+  * 深度拓展，尝试appearance的反转，类似于 in the shape of, 构造in the appearance of。**思考中**
   * 深度拓展，尝试pose的inversion, 构造in the pose of 
 * 2023年10月30日20:08:35：Domain-Agnostic Tuning-Encoder for Fast Personalization of Text-To-Image Models，这篇工作涉及到了Contrastive Loss，可以参考一下。
 

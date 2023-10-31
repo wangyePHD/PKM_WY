@@ -2,7 +2,7 @@
 id: hl8g90ehq1yp1uklwkyuavv
 title: mask_loss_idea_0_outline
 desc: ''
-updated: 1698598862257
+updated: 1698754781558
 created: 1698393830393
 ---
 ## ShapeInversion实验概要
@@ -16,4 +16,5 @@ created: 1698393830393
 |       Mask Loss Weight实验       |             idea             | 2023年10月26日00:12:49 |           👍           |     [[Research.Experiments.ShapeInversion.mask_loss_idea]]     | 基于Cross-attention Map的Mask Loss Idea能够极大的改进shape的学习，一致性很好。但是编辑能力下降的很严重。 |
 |        Mask Loss 实验分析        |             分析             | 2023年10月28日21:47:27 |           👍           | [[Research.Experiments.ShapeInversion.mask_loss_idea_analysis]] | 分析当下实验，未得出相关结论                                                                             |
 | 基于Self-attention的Mask Loss实验 |             idea             | 2023年10月29日20:22:17 |           👍           |   [[Research.Experiments.ShapeInversion.self_attn_mask_loss]]   | self-attention based Mask Loss效果不好，无法学习shape信息                                                |
-|   Domain-tuning和Mask Loss idea   |             idea             | 2023年10月29日21:49:18 |           👍           |                             [[Research.Experiments.ShapeInversion.domain_tuning_mask_loss]]                                    | domain-tuing阶段，mask loss会引起过拟合                                                                  |
+|   Domain-tuning和Mask Loss idea   |             idea             | 2023年10月29日21:49:18 |           👍           | [[Research.Experiments.ShapeInversion.domain_tuning_mask_loss]] | domain-tuing阶段，mask loss会引起过拟合                                                                  |
+|       Contrastive Loss Idea       |             idea             | 2023年10月31日20:19:00 |           👍           |    [[Research.Experiments.ShapeInversion.contrastive_loss]]    | contrastive loss在shapeinversion效果不好。                                                               |
