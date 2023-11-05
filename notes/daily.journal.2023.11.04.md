@@ -2,7 +2,7 @@
 id: bbcfha6pilt8fae3zrx1zzi
 title: '2023-11-04'
 desc: ''
-updated: 1699092867694
+updated: 1699098120826
 created: 1699064630456
 traitIds:
   - journalNote
@@ -16,11 +16,11 @@ traitIds:
 - [x]  每日Arxiv
   - [ ]  今日无Arxiv更新
 - [ ]  每日论文阅读
-- [ ]  相关论文回溯
-  - [ ]  
+  - [ ]  相关论文回溯
+    - [ ]  pix2pix-zero  
 - [ ]  实验安排
-  - [ ]  *s dog E4T baseline1 实验
-  - [ ]  dog in the shape of *s E4T baeline2 实验
+  - [x]  *s dog E4T baseline1 实验
+  - [x]  dog in the shape of *s E4T baeline2 实验
 
 ### <font color=#871F78>**不重要紧急**</font>
 
