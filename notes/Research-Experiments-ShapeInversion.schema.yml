@@ -8,6 +8,7 @@ schemas:
       - pattern: '*'
         children:
           - pattern: '*'
+            template: templates.research_papernotes
             children:
               - pattern: '*'
                 template: templates.experiments
