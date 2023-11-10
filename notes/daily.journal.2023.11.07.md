@@ -2,7 +2,7 @@
 id: 456ix9x2kfpq48vwj7cq1jf
 title: '2023-11-07'
 desc: ''
-updated: 1699370679015
+updated: 1699375974755
 created: 1699338648390
 traitIds:
   - journalNote
@@ -24,7 +24,12 @@ traitIds:
   - [x]  检查上述代码的正确性
   - [x] 更正代码后的二次实验进行
     - [ ] 实验结果测试
-  - [ ] 基于DINO，单独的appearance结果的inversion  
+    - [ ] 单个token分别测试，效果如何 
+      - [ ] 一起domain tuning，单个inference
+      - [ ] 分别domain tuning，分别inference
+  - [ ] 基于DINO，单独的appearance结果的inversion
+    - [ ] ![图 0](assets/images/86c4a592ca8c830bb7ebee4a776cd954a57427ecd09d52bf61089280de02e2f2.png)  
+  
 
 ### <font color=#871F78>**不重要紧急**</font>
 
