@@ -2,7 +2,7 @@
 id: we51fxz8cwu2t3aa6o0vsb4
 title: experiment_scheme
 desc: ''
-updated: 1699584976780
+updated: 1699620775282
 created: 1699369889624
 ---
 
@@ -21,7 +21,5 @@ created: 1699369889624
   - [ ] **今天重点做，优先做**
 - [ ] **想法7：** MasaCtrl这些文章，提到self-attention的K，V存储着该图像的appearance信息，这个信息如何利用
   - [ ] They show that keeping the keys and values of these self-attention layers fixed aids in preserving the visual characteristics of objects when applying non-rigid manipulations over a given image
-
- 
-
-s
+- [ ] **想法8:** 我现在实现的功能都是text驱动的图像editing或者生成，我在想怎么做才能实现Image-guided的，比如给定一张图，提取shape，用到另外一张图上。或者一张图提取shape，一张图提取appearance，然后组合到另外一张图上。 
+- [ ] **想法9：**我现在的结果在appearance inversion的时候，颜色也有一些不align，是否可以利用AdaIN来搞一下。

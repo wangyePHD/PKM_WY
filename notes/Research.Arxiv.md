@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: Daily Arxiv
 desc: ''
-updated: 1699497473682
+updated: 1699615093743
 created: 1699497182153
 ---
 
@@ -16,3 +16,31 @@ created: 1699497182153
 * OtterHD: A High-Resolution Multi-modality Model, 2023年11月8日，https://arxiv.org/pdf/2311.04219.pdf
 
 
+
+
+# Efficient-Diffusion Model
+* LCM-LORA: A UNIVERSAL STABLE-DIFFUSION
+ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:43:16
+
+
+
+
+
+# 3D 纹理上色
+* 3DStyle-Diffusion: Pursuing Fine-grained Text-driven 3D Stylization with 2D Diffusion Models, https://arxiv.org/pdf/2311.05464.pdf，2023年11月10日18:43:19
+
+
+
+
+# Image Style & Appearance
+* ControlStyle: Text-Driven Stylized Image Generation Using Diffusion Priors，https://arxiv.org/pdf/2311.05463.pdf，2023年11月10日18:43:29
+
+
+
+
+
+
+# 3D Generation
+## Text+Sketch
+* Control3D: Towards Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.05461.pdf, 2023年11月10日18:43:41
+* IPDreamer: Appearance-Controllable 3D Object Generation with Image Prompts，https://arxiv.org/pdf/2310.05375.pdf，2023.10.09
