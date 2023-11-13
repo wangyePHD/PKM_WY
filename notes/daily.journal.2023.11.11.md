@@ -1,9 +1,9 @@
 ---
-id: 4qcwmxxu1cb80dj8p9k07z0
-title: '2023-11-10'
+id: psl7lx5z4reutjul6n29jfa
+title: '2023-11-11'
 desc: ''
-updated: 1699627394602
-created: 1699581162540
+updated: 1699706118267
+created: 1699705167828
 traitIds:
   - journalNote
 ---
@@ -20,13 +20,11 @@ Based on the journaling method created by Intelligent Change:
 ### <font color=red>**重要紧急**</font>
 - [ ]  每日Arxiv
 - [ ]  每日论文阅读
-  - [ ]  cross-image attention论文
 - [ ]  实验安排
-  - [x]  last cls feature 在各个引导词下的实验进行中
-  - [ ]  color 0.1 重新测试
-  - [ ]  style 1.0 测试
-  - [ ]  整理实验, 分析实验现象
-  - [ ]  
+  - [ ]  验证multi-words 一起学习的实验效果
+  - [ ]  检查multiword代码的准确性
+    - [x]  tuning的代码是没有问题的
+    - [ ]  StableDiffusionE4TPipeline_multi_words 代码没有问题
 
 ### <font color=#871F78>**不重要紧急**</font>
 
