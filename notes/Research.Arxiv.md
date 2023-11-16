@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: Daily Arxiv
 desc: ''
-updated: 1699844802178
+updated: 1700102896390
 created: 1699497182153
 ---
 
@@ -45,6 +45,17 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 
 
 # 3D Generation
+
+## Text
+* Instant3D: Instant Text-to-3D Generation，https://arxiv.org/pdf/2311.08403.pdf，2023年11月16日
+
+## 单视角合成
+* One-2-3-45++: Fast Single Image to 3D Objects with Consistent Multi-View Generation and 3D Diffusion, https://arxiv.org/pdf/2311.07885.pdf, 2023年11月16日
+
+## 多视角重建
+* DMV3D: DENOISING MULTI-VIEW DIFFUSION USING
+3D LARGE RECONSTRUCTION MODEL, https://arxiv.org/pdf/2311.09217.pdf, 2023年11月16日
+
 ## Text+Sketch
 * Control3D: Towards Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.05461.pdf, 2023年11月10日18:43:41
 * IPDreamer: Appearance-Controllable 3D Object Generation with Image Prompts，https://arxiv.org/pdf/2310.05375.pdf，2023.10.09

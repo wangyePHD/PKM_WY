@@ -2,7 +2,7 @@
 id: we51fxz8cwu2t3aa6o0vsb4
 title: experiment_scheme
 desc: ''
-updated: 1699856122577
+updated: 1699865230165
 created: 1699369889624
 ---
 
@@ -36,4 +36,7 @@ created: 1699369889624
 2. 所以说，直接应用DINO-CLS 特征作为图像的Appearance representation，并不能带来最好的性能。这一点是可以确定的。
 
 
+---
+
+## **2023年11月13日16:46:42 重新思考现阶段的实验思路**
 

@@ -1,8 +1,8 @@
 ---
 id: 9y1i9ix785u9rr4k5m3f4u4
-title: Plug-and-Play Diffusion Features for Text-Driven Image-to-Image Translation
+title: Plug-and-Play Diffusion Features for Text-Driven Image-to-Image Translation，CVPR2023 poster
 desc: ''
-updated: 1699862095829
+updated: 1699862255511
 created: 1699859871989
 ---
 
