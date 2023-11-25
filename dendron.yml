@@ -92,6 +92,7 @@ publishing:
         - root
     writeStubs: false
     siteRootDir: docs
+    assetsPrefix: PKM_WY
     siteUrl: https://wangyephd.github.io
     seo:
         title: Dendron
