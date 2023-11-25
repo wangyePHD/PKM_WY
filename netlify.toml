@@ -20,7 +20,7 @@
 
   # Build command
   # Use the build script at root of repo
-  command = "dendron-publish-site.sh"
+  command = "bash dendron-publish-site.sh"
 
   # Optional: Designate a specific NODE_VERSION
   # environment = { NODE_VERSION = "16.13.2" }
