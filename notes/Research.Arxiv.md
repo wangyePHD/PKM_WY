@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: Daily Arxiv
 desc: ''
-updated: 1700102896390
+updated: 1700714989668
 created: 1699497182153
 ---
 
@@ -25,10 +25,19 @@ created: 1699497182153
 ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:43:16
 
 
+## Visual In-Context Learning
+* Visual In-Context Prompting, https://arxiv.org/pdf/2311.13601.pdf, 2023年11月23日12:49:48
+
+
 
 
 
 # **3D** 
+
+## 3D-aware Generation
+
+* WILDFUSION: LEARNING 3D-AWARE LATENT DIFFUSION MODELS IN VIEW SPACE, https://arxiv.org/pdf/2311.13570.pdf，2023年11月23日12:48:32
+
 
 ## 纹理上色
 * 3DStyle-Diffusion: Pursuing Fine-grained Text-driven 3D Stylization with 2D Diffusion Models, https://arxiv.org/pdf/2311.05464.pdf，2023年11月10日18:43:19
