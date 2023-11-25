@@ -1,20 +1,24 @@
 ---
 id: 0cqab020ofxee35u44yoa3c
-title: Root
+title: 王冶的科研知识管理系统
 desc: ''
-updated: 1698331275150
+updated: 1700902410836
 created: 1698331275150
 ---
-# Welcome to Dendron
 
-This is the root of your dendron vault. If you decide to publish your entire vault, this will be your landing page. You are free to customize any part of this page except the frontmatter on top.
 
-## Lookup
 
-This section contains useful links to related resources.
+## Introduction
+Greetings, I am Ye Wang, currently pursuing my doctoral studies at the School of Artificial Intelligence, Jilin University. I am in my second year, under the mentorship of Associate Professor [Rui Ma](https://ruim-jlu.github.io/), affiliated with the [ICL Group](https://ruim-jlu.github.io/team/).
 
-- [Getting Started Guide](https://link.dendron.so/6b25)
-- [Discord](https://link.dendron.so/6b23)
-- [Home Page](https://wiki.dendron.so/)
-- [Github](https://link.dendron.so/6b24)
-- [Developer Docs](https://docs.dendron.so/)
+
+## Research Focus
+My research pursuits revolve around, but are not confined to:
+- Image Generation
+- Image Editing
+- AIGC+ in the realm of Industrial Design
+
+
+## Publications
+
+<iframe src="Research.Paper.Publications.html" width="100%" height="500px"></iframe>
