@@ -2,7 +2,7 @@
 id: qikzz351b5vz9ga4wp2rgdo
 title: Splicing ViT Features for Semantic Appearance Transfer-CVPR 2022 Oral
 desc: ''
-updated: 1699533619516
+updated: 1700927669617
 created: 1699425694264
 ---
 

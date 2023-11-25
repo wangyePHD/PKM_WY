@@ -92,6 +92,7 @@ publishing:
         - root
     writeStubs: false
     siteRootDir: docs
+    siteUrl: https://wangyephd.github.io
     seo:
         title: Dendron
         description: Personal Knowledge Space
