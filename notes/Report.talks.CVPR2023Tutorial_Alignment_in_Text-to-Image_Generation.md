@@ -2,7 +2,7 @@
 id: ccs7d7umlj5adk5iiz5i16k
 title: CVPR2023-Tutorial-Alignment in Text-to-Image Generation
 desc: ''
-updated: 1700897333022
+updated: 1700928968528
 created: 1700887914946
 ---
 
@@ -119,9 +119,3 @@ Better Following Prompts
 
 ![图 18](assets/images/1653a82b8441c640cfc6e4e7e083c40f9f8c0d07dbe49787db41d6cda47bdc27.png)  
 
-
-
-
-
-![图 19](assets/images/035e4bcba68422b6d13b539771c95c055b3d041e0b33064b948944a9b04e2591.png)  
-    
