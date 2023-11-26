@@ -1,9 +1,11 @@
 ---
-id: 7zfw106bvy9y3bm8xkgwm48
-title: Daily Life and Work
+id: tkz7pxqp1oui2sdaa2m5gd5
+title: '2023-11-26'
 desc: ''
-updated: 1700967402323
-created: 1698372350320
+updated: 1700967410395
+created: 1700967410395
+traitIds:
+  - journalNote
 ---
 <!--
 Based on the journaling method created by Intelligent Change:
