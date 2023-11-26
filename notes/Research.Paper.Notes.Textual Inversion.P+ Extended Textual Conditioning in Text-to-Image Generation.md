@@ -2,7 +2,7 @@
 id: 1xya958rg7k11bfuf11xvhk
 title: P+ Extended Textual Conditioning in Text-to-Image Generation
 desc: ''
-updated: 1700974583268
+updated: 1700974767021
 created: 1700966931897
 ---
 
@@ -73,6 +73,9 @@ created: 1700966931897
 
 
 
-
-
 ## More
+
+在这里链接一下其他相关的文章：
+
+* [[Research.Paper.Notes.Textual Inversion.An Image is Worth Multiple Words: Multi-attribute Inversion for Constrained Text-to-Image Synthesis]]
+* [[Research.Paper.Notes.Textual Inversion.ProSpect: Expanded Conditioning for the Personalization of Attribute-aware Image Generation]]
