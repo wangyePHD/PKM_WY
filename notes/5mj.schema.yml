@@ -2,9 +2,9 @@ version: 1
 schemas:
 # Daily is the top most schema since its parent is 'root' it must have an identifier
 # this identifier 'daily' will be used when using 'Lookup (schema)' command.
-- id: daily
+- id: 01_daily
   parent: root
-  title: daily
+  title: 01_daily
   desc: ""
   # Children of the top most schema do not need to contain identifier and just 
   # require a 'pattern' to be set to match the hierarchy of notes.
@@ -23,4 +23,4 @@ schemas:
                   # the match of our notes. Below is an example usage of shorthand template
                   # definition (which defaults to type: note). 
                   desc: Five Minute Journal
-                  template: templates.daily-5mj
+                  template: templates.daily.5mj

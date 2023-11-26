@@ -2,7 +2,7 @@
 id: 0cqab020ofxee35u44yoa3c
 title: Personal Research Knowledge Management System
 desc: ''
-updated: 1700926954606
+updated: 1701004149747
 created: 1698331275150
 ---
 
@@ -16,5 +16,6 @@ My research pursuits revolve around, but are not confined to:
 - Image Generation 🌄
 - Image Editing ✂️
 - AIGC+ in the realm of Industrial Design 🏭
+
 
 

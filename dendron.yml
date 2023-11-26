@@ -27,7 +27,7 @@ workspace:
             selfContained: true
             name: PKM_WY
     journal:
-        dailyDomain: daily
+        dailyDomain: 01_daily
         name: journal
         dateFormat: y.MM.dd
         addBehavior: childOfDomain
@@ -61,7 +61,7 @@ workspace:
     graph:
         zoomSpeed: 1
         createStub: false
-    enableAutoCreateOnDefinition: false
+    enableAutoCreateOnDefinition: true
     enableXVaultWikiLink: false
     enableRemoteVaultInit: true
     enableUserTags: true
