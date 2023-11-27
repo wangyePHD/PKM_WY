@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1701006937982
+updated: 1701059883757
 created: 1699497182153
 ---
 
@@ -15,22 +15,29 @@ created: 1699497182153
 
 * NExT-Chat: An LMM for Chat, Detection and Segmentation，2023年11月9日，https://arxiv.org/pdf/2311.04498.pdf
 * OtterHD: A High-Resolution Multi-modality Model, 2023年11月8日，https://arxiv.org/pdf/2311.04219.pdf
+* Charting New Territories: Exploring the Geographic and Geospatial Capabilities of Multimodal LLMs，https://arxiv.org/pdf/2311.14656.pdf，2023年11月27日
 
 ## VLM
 * Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks，2023年11月13日，https://arxiv.org/pdf/2311.06242.pdf
 
+---
 
-# Efficient-Diffusion Model
+
+# Visual In-Context Learning
+* Visual In-Context Prompting, https://arxiv.org/pdf/2311.13601.pdf, 2023年11月23日12:49:48
+
+---
+
+# Diffusion
+
+## Control
+* ToddlerDiffusion: Flash Interpretable Controllable Diffusion Model, https://arxiv.org/pdf/2311.14542.pdf, 2023年11月27日
+
+## Efficient-Diffusion Model
 * LCM-LORA: A UNIVERSAL STABLE-DIFFUSION
 ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:43:16
 
-
-## Visual In-Context Learning
-* Visual In-Context Prompting, https://arxiv.org/pdf/2311.13601.pdf, 2023年11月23日12:49:48
-
-
-
-
+---
 
 # **3D** 
 
@@ -43,6 +50,10 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * 3DStyle-Diffusion: Pursuing Fine-grained Text-driven 3D Stylization with 2D Diffusion Models, https://arxiv.org/pdf/2311.05464.pdf，2023年11月10日18:43:19
 
 
+## Gaussian Splatting
+* GaussianEditor: Swift and Controllable 3D Editing with Gaussian Splatting，https://arxiv.org/pdf/2311.14521.pdf，2023年11月27日
+
+---
 
 
 # Image Style & Appearance
@@ -50,7 +61,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 
 
 
-
+---
 
 
 # 3D Generation
@@ -60,6 +71,10 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 
 ## 单视角合成
 * One-2-3-45++: Fast Single Image to 3D Objects with Consistent Multi-View Generation and 3D Diffusion, https://arxiv.org/pdf/2311.07885.pdf, 2023年11月16日
+* Boosting3D: High-Fidelity Image-to-3D by Boosting 2D Diffusion Prior to 3D
+Prior with Progressive Learning, https://arxiv.org/pdf/2311.13617.pdf, 2023年11月27日
+* MVControl: Adding Conditional Control to Multi-view Diffusion for
+Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023年11月27日
 
 ## 多视角重建
 * DMV3D: DENOISING MULTI-VIEW DIFFUSION USING
@@ -71,3 +86,16 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 
 ## Text+Sparse-View
 * Instant3D: Fast Text-to-3D with Sparse-view Generation and Large Reconstruction Model, 2023年11月13日，https://openreview.net/forum?id=2lDQLiH1W4（ICLR24 review 信息）
+
+--- 
+
+# 4D
+
+## 4D Dynamic Scene
+* Animate124: Animating One Image to 4D Dynamic Scene, https://arxiv.org/pdf/2311.14603.pdf, 2023年11月27日
+
+
+---
+
+# Video
+* Decouple Content and Motion for Conditional Image-to-Video Generation,https://arxiv.org/pdf/2311.14294.pdf, 2023年11月27日

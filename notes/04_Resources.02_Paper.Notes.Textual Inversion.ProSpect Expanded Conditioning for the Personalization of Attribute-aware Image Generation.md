@@ -4,38 +4,29 @@ title: >-
   ProSpect Expanded Conditioning for the Personalization of Attribute-aware
   Image Generation
 desc: ''
-updated: 1701009151849
+updated: 1701065731686
 created: 1700988362106
 ---
 
-## In a word
 
 
+![](assets/images/pdfPrinter_page-0002.jpg)
 
-## Motivation
+![](assets/images/pdfPrinter_page-0003.jpg)
 
+![](assets/images/pdfPrinter_page-0004.jpg)
 
+![](assets/images/pdfPrinter_page-0005.jpg)
 
-
-## Method
-
-
-
-
-
-## Insight
+![](assets/images/pdfPrinter_page-0006.jpg)
 
 
+## Reference
+
+[[04_Resources.02_Paper.Notes.Textual Inversion.P+ Extended Textual Conditioning in Text-to-Image Generation]]
+
+[[04_Resources.02_Paper.Notes.Textual Inversion.An Image is Worth Multiple Words Multi-attribute Inversion for Constrained  Text-to-Image Synthesis]]
 
 
-
-## Results
-
-
-
-
-
-## More
-
-
+## Tags
 #subconcept-inversion
