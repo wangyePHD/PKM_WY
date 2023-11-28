@@ -2,7 +2,7 @@
 id: 1xya958rg7k11bfuf11xvhk
 title: P+ Extended Textual Conditioning in Text-to-Image Generation
 desc: ''
-updated: 1701011055096
+updated: 1701106139853
 created: 1700966931897
 ---
 

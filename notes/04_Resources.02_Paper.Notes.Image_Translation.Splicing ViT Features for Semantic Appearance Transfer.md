@@ -2,9 +2,10 @@
 id: qikzz351b5vz9ga4wp2rgdo
 title: Splicing ViT Features for Semantic Appearance Transfer-CVPR 2022 Oral
 desc: ''
-updated: 1700927669617
+updated: 1701106057031
 created: 1699425694264
 ---
+
 
 ## In a word
 本文解决的是如何将target图的appearance迁移到source图上，同时保持source图的结构不变。也就是所谓的Appearance Transfer。

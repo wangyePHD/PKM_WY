@@ -2,9 +2,10 @@
 id: cfuds2xi472nuhbtwj5c7cb
 title: Cross-Image Attention for Zero-Shot Appearance Transfer
 desc: ''
-updated: 1699611903020
+updated: 1701105856906
 created: 1699361536894
 ---
+
 
 ## In a word
 
@@ -97,7 +98,7 @@ cross-image attention就是能够将appearance图的信息transfer到structure�
 **Translation相关：**
 
 * Diffusion self-guidance for controllable image generation.
-* Diffusion-based image translation using disentangled style and content representation
+* [[04_Resources.02_Paper.Notes.Image_Translation.Diffusion-based Image Translation using Disentangled Style and Content Representation]]
 * Enabling drag-style manipulation on diffusion models
 * [[04_Resources.02_Paper.Notes.Image_Translation.Splicing ViT Features for Semantic Appearance Transfer]]
 

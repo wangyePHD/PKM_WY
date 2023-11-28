@@ -2,7 +2,7 @@
 id: 426m1eouvrzmuvy9wlsc6vl
 title: Subconcept Inversion Summary
 desc: ''
-updated: 1701071140666
+updated: 1701095729381
 created: 1701060354036
 ---
 
@@ -56,6 +56,33 @@ created: 1701060354036
 
 ![图 2](assets/images/2757df0a47457f4879b8f1fed52e213b0f332eb7f67b8226854c12c99c79b1f5.png)  
 
+
+### **指标细化**
+
+**MATTE**
+* 评估color，style，object inversion的准确度
+  * GT怎么来：
+    * color的话，直接使用Color Thief提取图像颜色，将得到图像的主要颜色分布
+    * object和style的话，采用了在CLIP Image Embedding空间中，查找最近邻
+    * louout无法评测，没有GT（这个可能是因为layout的定义本身就不清晰）
+  * 评测过程：
+    * 对于color，object，style来说，给定一张reference图像，分别对color，object，style反转合成64张图像，这里使用了不同的seed。然后和GT reference图像计算CLIP 图像相似度
+    * 还计算了合成的prompt和GT text之间的CLIP文本相似度
+    * 还算了一个两个属性之间的解耦程度（略过）
+
+**Prospect**
+* CLIP-Image 相似度
+  * 生成图像和参考图像之间的CLIP图像相似度，评估content fidelity
+* CLIP-Text 相似度
+  * 生成图像和textual prompt之间的CLIP图文相似度，评估editability
+* User Study
+
+**P+**
+* CLIP Text 相似度
+  * 生成图像和prompt之间的CLIP相似度
+* Subject Similarity
+  * 生成图像和原始图像在ViT-S/16 DINO embedding的图像相似度
+* User Study
 
 
 
