@@ -1,13 +1,12 @@
+
 ---
 id: fth5u265ecamb9b3poums2r
 title: '20231128'
 desc: ''
-updated: 1701234313221
+updated: 1701235513391
 created: 1701223492378
 ---
 
-
-# 2023.11.28 Arxiv更新
 
 > AIGC+视觉方向
 
