@@ -2,7 +2,7 @@
 id: 9yle6i9ekd27ae57h7hhcbr
 title: Appearance_inversion_LayerNorm的作用
 desc: ''
-updated: 1701712792510
+updated: 1701744389782
 created: 1701696170850
 ---
 
@@ -37,3 +37,9 @@ created: 1701696170850
 
 
 ## leopard实验
+
+![图 2](assets/images/ec83400f8e1a8a9f8222493620a0e1223ee1b8429ac2649c19d57b877a179381.png)  
+
+
+LN确实能起到一些作用，但是好像影响不大。
+

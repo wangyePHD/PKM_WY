@@ -2,7 +2,7 @@
 id: a9u55yo9ykensd1yr3mn4v7
 title: Appearance_inversion实验日志记录
 desc: ''
-updated: 1701713426471
+updated: 1702220746081
 created: 1701258209464
 ---
 
@@ -213,6 +213,7 @@ debug_update_K_V_custom_diffusion_2023-12-01-22.16
   * LayerNorm的作用？
     * [[02_Projects.2023_SubConcept_Inversion.Experiments.Appearance_inversion_LayerNorm的作用、]]
   * Lr的原因吗？
+  * Domain-class-token的原因吗？
 
 
 * 既然LayerNorm能提高质量，那么请继续设计更好的MLP+layerNorm结构？
@@ -224,4 +225,140 @@ debug_update_K_V_custom_diffusion_2023-12-01-22.16
 * zip-Lora的思路
   * 查看一下微调的所有KV参数，都是必须的吗？如果不是，那也可以减少参数量进行微调
 
+
+
+
+
+* 为什么每次推理得到的结果都是不一样的呢？
+  * 没搞清楚
+
+
+---
+
+
+## 基于Visual Information Injection的方案，实验，结果分析
+
+之前的方法，可以总结成一句话，也就是利用textual modal的inversion，实现appearance信息的extraction。但是我发现这种方式并不高效，对于一些简单的appearance比如黑白的斑点，是可以实现的。但是对于复杂的appearance效果就不太好了。因此，我们希望搞一个新的机制和架构，也就是利用Visual信息进行注入，作为条件，直接学习和保存appearance信息。
+
+这里主要参考的文章包括：
+* MagicAnimate: Temporally Consistent Human Image Animation using Diffusion Model
+* X&Fuse: Fusing Visual Information in Text-to-Image Generation
+* Subject-Diffusion: Open Domain Personalized Text-to-Image Generation without Test-time Fine-tuning
+
+
+
+我们打算先尝试X&Fuse的架构，首先这个架构非常简单：
+
+![图 9](assets/images/ffac214b0c0de3ef1ffb9a83f37b7ce87e102f5abe1da8225d50e30ca8521ffc.png)  
+
+同时，我看到了一个类似的效果：
+![图 10](assets/images/993d5e4ce40017dfb7456dad08dc6019f4f8a0066fee5da851a73e91b1a3ad21.png)  
+从这张图上来看，居然保持了appearance信息，虽然也有shape的信息。
+
+因此，我们打算做如下实验：
+* 引入visual appearance 信息，作为条件注入到现有的Student Model之中。
+* 同时给定，文本信息，然后使用噪音重建损失来学习。
+* 预期效果
+  * 在推理采样的时候，我们使用目标文本和visual appearance信息，生成符合视觉信息和文本联合指导的图像。
+
+
+我们先使用X&Fuse架构进行实验：
+
+
+**UNet中不同的block的类型记录：**
+
+![图 11](assets/images/e8ce7e5cebf4e39501818c279d1bce14ef2c43c461e108ee909edcc274899bd9.png)  
+
+代码编写思路：
+从简单开始，先把图像信息加入到UpBlock中
+1. up、down、mid，他们的输入都是两个hiddens，一个是noise，一个是条件图
+2. 每个resnet block处理两次，分别是noise和条件图，得到的输出应该concat
+3. 输入到self-attention的是noise和条件图concat的结果，经过self-attention的处理，输出的时候，应该split成两个。
+
+上述过程有些繁琐，不太方便快速验证。
+
+
+
+**attn1的name list：**
+['down_blocks.0.attentions.0.transformer_blocks.0.attn1', 'down_blocks.0.attentions.1.transformer_blocks.0.attn1', 'down_blocks.1.attentions.0.transformer_blocks.0.attn1', 'down_blocks.1.attentions.1.transformer_blocks.0.attn1', 'down_blocks.2.attentions.0.transformer_blocks.0.attn1', 'down_blocks.2.attentions.1.transformer_blocks.0.attn1', 'up_blocks.1.attentions.0.transformer_blocks.0.attn1', 'up_blocks.1.attentions.1.transformer_blocks.0.attn1', 'up_blocks.1.attentions.2.transformer_blocks.0.attn1', 'up_blocks.2.attentions.0.transformer_blocks.0.attn1', 'up_blocks.2.attentions.1.transformer_blocks.0.attn1', 'up_blocks.2.attentions.2.transformer_blocks.0.attn1', 'up_blocks.3.attentions.0.transformer_blocks.0.attn1', 'up_blocks.3.attentions.1.transformer_blocks.0.attn1', 'up_blocks.3.attentions.2.transformer_blocks.0.attn1', 'mid_block.attentions.0.transformer_blocks.0.attn1']
+
+**attn1的shape list：**
+[torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320]), torch.Size([1, 64, 1280])]
+
+
+**up_block的name list：**
+['up_blocks.1.attentions.0.transformer_blocks.0.attn1', 'up_blocks.1.attentions.1.transformer_blocks.0.attn1', 'up_blocks.1.attentions.2.transformer_blocks.0.attn1', 'up_blocks.2.attentions.0.transformer_blocks.0.attn1', 'up_blocks.2.attentions.1.transformer_blocks.0.attn1', 'up_blocks.2.attentions.2.transformer_blocks.0.attn1', 'up_blocks.3.attentions.0.transformer_blocks.0.attn1', 'up_blocks.3.attentions.1.transformer_blocks.0.attn1', 'up_blocks.3.attentions.2.transformer_blocks.0.attn1']
+
+**up_block的shape list：**
+[torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320])]
+
+
+
+采用MaginAnimate的方法进行验证：
+* 核心代码目前已经实现了。
+* 我看了controlNet，发现，其并没有给condition image加噪，我们这边也不加噪，直接就是干净的图像，经过VAE encode之后，然后注入到Unet中，提取其upsample block self-attention的hiddens。
+* 基于提取到的hiddens，注入到student中，采取的方式和MagicAnimate 一致。
+
+
+第一次实验的结果如下：
+* 测试文本：a cat in the appearance of *a
+* 效果如下：**有问题**
+
+![图 12](assets/images/1537911279cd55badcbbeb885bfe4d773410451a6e404900a7382a2dcd8aa04c.png)  
+
+**草，傻逼东西，代码写错了。直接输入噪音和再噪音上预测了。**
+
+---
+
+![Alt text](image-1.png)
+
+![图 14](assets/images/4ee3dec60071004bf98844d4d99aab83b6fff944a976aa1871beb5d33c458208.png)  
+
+第一行是引入Appearance Encoder之后的结果。第二行是之前没有引入Appearance ENcoder的结果。可以发现，虽然引入Appearance Encoder之后，最终的效果并不好，而且得到的结果更加倾向于原始图像。但是对于appearance的保存还是很好的。
+
+生成结果有以下几个问题：
+* **全局模糊**
+* **还是过拟合成了dog**
+
+
+
+**<font color="red">如何解决全局模糊问题：</font>**
+* 可能是up-sample block中的所有selfattn都被用来注入了。有点多，试着减少注入的个数？
+* 是否concat的时候，我们应该乘以一个小权重？
+* MagicAnimate中的Appearance Encoder是trainable的，我们这里是冻结的？
+
+
+**实验一：仅仅在最后三层self-attention中注入appearance**
+![图 15](assets/images/f3adeff80a3013548a81bfa60dcf59d314048dfd85953f2fce191325ce6da82b.png)  
+
+**<font color="green">结论：有效，成功解决了图像模糊现象和问题</font>**
+
+![图 16](assets/images/50adf612be47a04a4cfb98abf80fea201d42f610642e3a0293522b052a5fb6d9.png)  
+
+如上图所示，目前可以得到appearance一致的结果了。但是可以发现，reference image的pose等其他信息也被保留下来了。
+
+**为什么会有shape信息保留下来？**
+
+* 在MagicAnimate论文中，原文也论述了Appearance Encoder是可以保留外观，纹理，同时包括content和pose等其他信息。
+* 可能在upblcok中，不同的self-attention传达着不同的信息。
+
+
+**<font color="red">研究一下的不同的self-attention的作用和角色？</font>**
+
+上述实验已经验证了res=64的三层，发现会把shape保留下来。
+
+接下来，我们保留res=32的三层，也就是10，11，12
+
+[torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320])]
+
+
+
+
+
+---
+
+
+## TODO
+
+* 不使用全量Unet参数进行微调，只微调部分？
 

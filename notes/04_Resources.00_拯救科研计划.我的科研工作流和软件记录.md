@@ -2,7 +2,7 @@
 id: qqsd41294ohovwe0x2cfyz4
 title: 我的科研工作流和软件记录
 desc: ''
-updated: 1701407226453
+updated: 1702196935880
 created: 1701398414450
 ---
 
@@ -37,3 +37,9 @@ created: 1701398414450
 * zo
 * UPDF
 * youtube+chatgpt+具体prompt，总结论文
+
+
+
+## Windows良心软件
+* 磁盘分析工具：
+  * WizTree
