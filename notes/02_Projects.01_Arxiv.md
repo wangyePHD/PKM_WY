@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1702215415659
+updated: 1702274408672
 created: 1699497182153
 ---
 
@@ -42,7 +42,7 @@ created: 1699497182153
 * LCM-LORA: A UNIVERSAL STABLE-DIFFUSION
 ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:43:16
 * WarpDiffusion: Efficient Diffusion Model for High-Fidelity Virtual Try-on, 2023年12月7日12:38:09
-
+* SwiftBrush: One-Step Text-to-Image Diffusion Model with Variational Score Distillation，2023年12月11日14:00:07
 ---
 
 # **3D** 
@@ -77,7 +77,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 
 
 ## Editing
-
+* Inversion-Free Image Editing with Natural Language，2023年12月11日13:59:02
 
 ## Generation
 * FoodFusion: A Latent Diffusion Model for Realistic Food Image Generation，2023年12月7日12:29:17
@@ -92,6 +92,8 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 ## Others
 * Instance-guided Cartoon Editing with a Large-scale Dataset，https://arxiv.org/abs/2312.01943，2023年12月6日
 * Diffusing Colors: Image Colorization with Text Guided Diffusion，2023年12月10日21:35:56
+* Fine-Tuning InstructPix2Pix for Advanced Image Colorization,2023年12月11日13:58:25
+* HandDiffuse: Generative Controllers for Two-Hand Interactions via Diffusion Models，2023年12月11日13:58:39
 
 
 ## 定制化
@@ -108,6 +110,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * IPDreamer: Appearance-Controllable 3D Object Generation with Image Prompts，https://arxiv.org/pdf/2310.05375.pdf，2023.10.09
 * Instant3D: Fast Text-to-3D with Sparse-view Generation and Large Reconstruction Model, 2023年11月13日，https://openreview.net/forum?id=2lDQLiH1W4（ICLR24 review 信息）
 * ControlDreamer: Stylized 3D Generation with Multi-View ControlNet,https://arxiv.org/abs/2312.01129,2023年12月7日00:20:17
+* Text-to-3D Generation with Bidirectional Diffusion using both 2D and 3D priors，2023年12月11日13:58:48
 
 ## Image->3D
 * HyperDreamer: Hyper-Realistic 3D Content Generation and Editing from a Single Image，2023年12月10日21:35:03
@@ -170,7 +173,9 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * AVID: Any-Length Video Inpainting with Diffusion Model，2023年12月10日21:36:20
 * AnimateZero: Video Diffusion Models are Zero-Shot Image Animators，2023年12月10日21:36:32
 * DiffusionAtlas: High-Fidelity Consistent Diffusion Video Editing，2023年12月10日21:36:39
-
+* Customizing Motion in Text-to-Video Diffusion Models，2023年12月11日13:59:22
+* DreaMoving: A Human Dance Video Generation Framework based on Diffusion Models，2023年12月11日13:59:32
+* Video-Based Rendering Techniques: A Survey，2023年12月11日13:59:52
 ---
 
 # Human-interaction

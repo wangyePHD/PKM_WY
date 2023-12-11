@@ -2,7 +2,7 @@
 id: a9u55yo9ykensd1yr3mn4v7
 title: Appearance_inversion实验日志记录
 desc: ''
-updated: 1702220746081
+updated: 1702279337081
 created: 1701258209464
 ---
 
@@ -349,7 +349,75 @@ debug_update_K_V_custom_diffusion_2023-12-01-22.16
 
 接下来，我们保留res=32的三层，也就是10，11，12
 
-[torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 256, 1280]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 1024, 640]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320]), torch.Size([1, 4096, 320])]
+![图 18](assets/images/efac96ffcd1ae86d44951fe19fa2606a47c2229e66c92a8942cf8c352000328d.png)  
+
+下面这一行的结果是上述实验设置对应的结果，我们发现：
+
+**<font color="green">结论：10-13层，也没有完全关注appearance</font>**
+
+
+
+
+**<font color="red">7-9层self-attention在关注什么？</font>**
+
+![图 19](assets/images/d35c33d1c43ca0ab3d9b959944dbf1cb1970e338e238f903f722ab34349861b6.png)  
+
+
+**<font color="green">res较低的7-9层，也有一定的保持能力，但是会带来图像模糊问题。</font>**
+
+
+**<font color="red">13,14,15如果分别注入，会有什么问题？</font>**
+
+![图 20](assets/images/9e391d2de5b0319ef135cd7b4a8aa8052c0780eb40f5f4a048de89309feeb338.png)  
+
+![图 21](assets/images/30c5313f7dc7ccf551f501b6e1237210065473727bdd883677bdf52c66a23709.png)  
+
+**<font color="green">13层也会有这样的问题</font>**
+
+
+
+**<font color="red">突然想到，appearance信息应该是后期才有效果，如果我在推理的时候后期再注入呢？</font>**
+
+后期注入比如<200, 我发现pose还是不变。
+
+
+
+**<font color="red">怀疑pose 布局等信息，可能不是Appearance注入带来的？</font>**
+
+![图 22](assets/images/2b945324b0c8e6d4cd3de5220489636497f50c78e4a0fc23cede5b573014623f.png)  
+直接采用不注入的形式进行训练。
+
+
+**实验证明，实际上上述效果都是过拟合了全量UNet造成的。而不是Appearance注入带来的。艹！**
+
+---
+
+**仅微调Cross-Attention KV，然后使用13-15 self-attention注入。**
+
+![图 23](assets/images/8b886842cdade3b1cd3567fcf4da7bbb565c2509a7496c71bc142ef7d16c5e51.png)  
+
+可以发现，还是会有pose的注入。
+
+基于此结果，如果我只在200时间步内，注入Appearance 信息呢？
+
+![图 24](assets/images/b64c763136aec71aaa3b76aeacda55f8f7dcf96882c95abb4e166f921927fa3f.png)  
+
+
+
+**之前我们训练都是训练全部的参数，最终的结果appearance基本都被保持下来了。只是猫太像狗了。但是这个却说明了，过拟合也是有用的啊。如果我们只是微调KV参数，最终的结果虽然能得到不同的猫，但是你会发现appearance基本保存不下来。这就说明过拟合效果不够。**
+
+**由此，我微调全部的upblcok** 
+
+![图 25](assets/images/090e341c8e3f418a0051496119176270e6160fb7d4deb422978973dace09d93a.png)  
+
+* 通过上下对比，我发现如果我们微调全量的UNet，也就是Down+Mid+Up的话，shape和Appearance信息很快就会被学出来，而且生成的结果也都保持着原来的shape和appearance。
+* 但是，如果我们只微调UpBlock的时候，我们发现appearance和shape的学习顺序是先后的，在200-300期间，appearance信息率先被学习出来。一直到后期400-800的时候，我们发现shape信息也出来了，而且越来越像dog了。
+
+这是否在说明，对于UNet来说，Down Block是负责shape学习的，而Upblock是负责appearance学习的？
+
+**由此，我微调全部的downblock？**
+
+
 
 
 
@@ -358,7 +426,15 @@ debug_update_K_V_custom_diffusion_2023-12-01-22.16
 ---
 
 
-## TODO
 
+## TODO
+* 尝试MasaCtrl的方式？及其在Video上的应用方式？
+* 逐层分析self-attention的影响？
+* 能否从输入端解决这个问题，如果输入端不是一张狗的图像，而是狗的纹理图呢？
+* appearance和shape，并不是在同一阶段生成的，shape或者轮廓应该是在初期，也就是1000步左右，而appearance信息则是在后期生成的。这里是否可以用一个之前设计的时间步采样策略，让appearance information优先被提取出来。
 * 不使用全量Unet参数进行微调，只微调部分？
+* 推理的时候，我们使用的是一张图，然后提取appearance 信息，如果有多张增强的图像，是不是就不会受限于这个朝向了。
+* 测试更多的例子
+
+
 
