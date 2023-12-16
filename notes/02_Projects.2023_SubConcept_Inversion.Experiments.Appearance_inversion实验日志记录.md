@@ -2,7 +2,7 @@
 id: a9u55yo9ykensd1yr3mn4v7
 title: Appearance_inversion实验日志记录
 desc: ''
-updated: 1702279337081
+updated: 1702560770746
 created: 1701258209464
 ---
 
@@ -415,26 +415,1081 @@ debug_update_K_V_custom_diffusion_2023-12-01-22.16
 
 这是否在说明，对于UNet来说，Down Block是负责shape学习的，而Upblock是负责appearance学习的？
 
+
+
 **由此，我微调全部的downblock？**
 
+![图 26](assets/images/38f21d29bfedde0e58a3cf70ab98e199f5050bf67ee458b47163586d68828680.png)  
 
 
+* 从上述结果来看，可以发现如果仅仅微调UpBlock，我们会得到reference image的appearance信息。
+* 而如果只微调DownBlock的话，可以发现会逐渐得到这个reference image的shape。
 
+
+**还不错的结果如下：**
+
+![图 27](assets/images/83875a2c528d52d4ec22e20e171c1d60ee0241442ca8ab1725f2c84c0402f750.png)  
+
+这些结果都是训练的时候使用了appearance injection，推理的时候没有使用appearance injection。
+
+
+**使用appearance 注入，在推理的时候**
+
+![图 28](assets/images/c24c927161289b16aa46c39283d4ffca61746ce9a7a909fcb24f78941e83401c.png)  
+
+不明白为什么在推理时候，注入appearance信息时，却变成了这个吊样子。难道说当前的self-attention 提取的信息也不是很正确，并不是纯净的appearance信息。
 
 
 
 ---
 
+## 2023年12月12日10:54:57 总结：
+
+**<font color="green">通过上述实验的论述，我发现只需要微调upblock就能够实现参考图像 appearance信息的保存，如上述的dog结果所示。</font>**
+
+<font color="red">但是第二个问题也随之而来，即使我们现在微调了Upblock的参数，确实也能够实现appearance信息的学习和迁移，但是还是会把reference图像的shape或者结构信息学出来，如下图所示：</font>
+
+![图 29](assets/images/cdd7809f3517140fc32a161d80da859e011caaf9f4636b96e679a2e637b806a1.png)  
+
+* 虽然学习到了cow的黑白斑点，但是生成的猫的体型也很类似于cow。
+* appearance的学习好像也是有语义对应的。
+
+分析可能得原因如下：
+* 微调整个upblcok可能还是有点多，看看能否基于res进行训练。而不是全部微调。
+* 如果只是学习一张图，那能否引入更多的数据增强手段。
+* 如果是基于LoRA的话，能否做的更好？
+
+---
+
+## 2023年12月12日12:42:47实验日志
+
+### 去掉in the appearance of *a, 直接a *a cow/dog等。
+
+![图 30](assets/images/c0ed05c082b2c86d4d4c646aedf7a90d3ae55d538cb9dcbb11e93c69d5345344.png)  
+
+这么对比来看，text prompt的影像也很大啊。而且目前的架构，也需要简化，给人感觉teacher其实没那么有用。
+
+
+
+### 去掉teacher，保持a cow in the appearance of *a 进行实验
+
+```bash
+--domain_embed_scale=0.0
+```
+
+通过实验对比，发现影像不大。即使不使用Teacher提供的embedding，只需要微调Student的Upblock也能学到appearance信息。
+不过还是保留吧。
+
+
+### 按照res，成块的微调UNet
+
+* 目前保留了所有的attention of upblock，resnet都没有更新（实验中）
+
+
+![图 32](assets/images/c878d9d8f35bcfbe73119a5f51ac91bc3cd938ce4f2b9a794972851e73f64d2d.png)  
+
+
+
+* 有一定的改善，可以发现，cat的生成，在appearance上保持的还可以，同时在shape的也没有完全一致，这说明当前的做法，有助于进一步缓解过拟合。
+* 但是在训练后期还是会出现，shape完全和reference 图一致的结果。这有可能说明，当前还是没有找到正确的方法或者微调区域。（最后的dog）
+
+
+### 只微调Upblock2，3
+![图 33](assets/images/727802b08f2f5fbe98f97e447df48a8879dfcaad2d2304b48c37df58ece480ff.png)  
+
+
+
+
+### 上述实验汇总分析：
+
+
+* 我们首先做了第一个实验，就是微调upblock的全部参数，我们发现可以实现appearance的保留和迁移，但是参考图的shape和结构也会被学习出来，并在生成图像上有所体现。
+* 之后，我们怀疑是resblock的原因，因此，我们冻结了upblock中的所有resnet网络，只训练attention。但是我们发现，还是会学习到appearance，同时shape和结构也会被保留下来。这说明，resnet其实并不是主要原因。 
+* 此外，我们做了第三个实验，upblock共包含0，1，2，3个子模块，我们只微调2，3模块，appearance的学习并不充分，但是shape和结构就不会被学出来。这就说明appearance的学习可能主要就是依靠upblock的0，1模块，同时shape和结构也是由这个模块学习的。
+  ![图 34](assets/images/147874e731c156cf007ae12cc9ea14e506601f77b7ef11d41b175a9affe14373.png)  
+
+* 为了验证上述想法呢，我们做了第四个实验，微调1，2，3模块，我们发现，appearance的学习更加充分，但是也会有几何和结构被学习出来。这就说明了其实appearance和shape的学习更多的集中在upblock的1模块。
+  ![图 35](assets/images/e7f3a7e120e366fd9b4bcec25b2d21a9762008565d166ae38fcbfefcbdbeb22b.png)  
+
+
+
+### 只微调upblock_1
+
+![图 36](assets/images/56a3e8e27e868f735d07ef0ca56553556351ba934776a0e6a904d52e70df47b6.png)  
+
+![图 38](assets/images/9bc8aaa746c05330eb62c7b417d8b2d903fab3a63ff9d9ec2caa42afaa8a3d53.png)  
+
+从这组实验结果来看，我们发现upblock的1 module主要还是学习了shape，对于appearance的学习也涉及了一些，但是最主要的还是shape信息在此处被学习出来了。
+感觉现在的结论比较清晰了。
+* upblock中，block1是主要学习shape的layer。
+* 对于appearance的学习，block1、2、3都有涉及。
+
+### 只微调upblock_2
+
+能够学到appearance信息，但是不会学习到shape信息。
+
+
+### 只微调upblock_2
+![图 37](assets/images/ebaba86268ff31d11c32ea5c1e4c1ec13ef614bc93c8c592a99798391e22538f.png)  
+
+* appearance能学到，但是不明显。
+* shape完全学不到。
+
+
+
+
+### upblock中得module 1 包括了attention-0，attention-1，attention-2，验证一下不同的作用是什么？
+
+
+* 只微调up_blocks.1.attentions.2
+  * 能够学到appearance信息，但是不明显。
+  * 即使学到1000步，shape信息还是没有学到。
+  * **和实验 _只微调upblock_1_ 相比，shape的信息应该是upblock.1.attention.0和.1负责学到的。**
+
+
+* 微调up_blocks.1.attentions.0和up_blocks.1.attentions.1
+  * 后期会出现shape学习到了的现象
+  * 但是appearance的学习不是特别的好。
+  * 整体来说现象都不明显。
+
+
+### 微调upblock的attention2+upblock的module2和module3
+* 确实没有学到shape，但是appearance的信息也不多。
+* 这有可能说明，还需要再往前找。
+
+
+### 微调upblock的attention1-2+upblock的module2和module3
+
+
+![图 39](assets/images/30c6b9555bc33634306a8394b4a4f2ed2f1b4861f43118c12b3ef1536a728cad.png)  
+
+能得到类似的效果。
+
+### 实验总结
+
+* 从上述实验来看，精细的设计和选取微调模块，效果都不好，莫不如直接微调整个upblock。这样的话效果就很明显。
+* 接下来的实验中，不再尝试各种选层微调了，没有太大意义。
+* 接下来需要做的事情：
+  * 在多个数据上，验证appearance和shape分别学习的结论 
+  ![图 40](assets/images/fae2cda98512dae7eefcbf2ed01879df37235a7784ceaf6cb62f91a267f1c37b.png)  
+  ![图 41](assets/images/59fd84237132777f96fd69489cef8c14b7dbb7c4bf7627b3c39c2df225d430b1.png)  
+  ![图 42](assets/images/fdcd2bba02942e1a582c6df38f3d3b40a66ee1b1ef59ec88bb1af05996bc1a90.png)  
+
+  * 在多个数据上，测试下生成的效果，准备汇报内容。
+
+
+
+
+
+
+
+### Diffusion in Style Idea实验
+
+* 如何获取参考图的appearance mean和std呢？
+  * 由于只有一张参考图，因此，我可以多次数据增强（空间）这张图，可以获得多张图像。
+  * 使用VAE encode这些图像，然后求解mean和std
+  * 将mean和std用于noise采样
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## TODO
-* 尝试MasaCtrl的方式？及其在Video上的应用方式？
-* 逐层分析self-attention的影响？
-* 能否从输入端解决这个问题，如果输入端不是一张狗的图像，而是狗的纹理图呢？
+* 基于上述发现，尝试测试更多的例子
+* domain_scale如果放大 会怎么样，比如0.5 1.0
+* 我们现在的文本输入是否太简单了，能否BLIP2给一个描述输入进去呢？
+* 最终能否做成E4T那样，也是在一个domain上训练，然后整个domain的appearance 和 shape finetuning一下，就可以了。
 * appearance和shape，并不是在同一阶段生成的，shape或者轮廓应该是在初期，也就是1000步左右，而appearance信息则是在后期生成的。这里是否可以用一个之前设计的时间步采样策略，让appearance information优先被提取出来。
-* 不使用全量Unet参数进行微调，只微调部分？
 * 推理的时候，我们使用的是一张图，然后提取appearance 信息，如果有多张增强的图像，是不是就不会受限于这个朝向了。
-* 测试更多的例子
+* ~~去掉in the appearance of *a. 直接就是a *a cow~~
+* ~~尝试MasaCtrl的方式？及其在Video上的应用方式？~~
+* ~~逐层分析self-attention的影响？~~
+* ~~能否从输入端解决这个问题，如果输入端不是一张狗的图像，而是狗的纹理图呢？~~
+* ~~不使用全量Unet参数进行微调，只微调部分？~~
 
 
 
+
+
+
+```bash
+up_blocks.0.resnets.0.norm1.weight
+up_blocks.0.resnets.0.norm1.bias
+up_blocks.0.resnets.0.conv1.weight
+up_blocks.0.resnets.0.conv1.bias
+up_blocks.0.resnets.0.time_emb_proj.weight
+up_blocks.0.resnets.0.time_emb_proj.bias
+up_blocks.0.resnets.0.norm2.weight
+up_blocks.0.resnets.0.norm2.bias
+up_blocks.0.resnets.0.conv2.weight
+up_blocks.0.resnets.0.conv2.bias
+up_blocks.0.resnets.0.conv_shortcut.weight
+up_blocks.0.resnets.0.conv_shortcut.bias
+up_blocks.0.resnets.1.norm1.weight
+up_blocks.0.resnets.1.norm1.bias
+up_blocks.0.resnets.1.conv1.weight
+up_blocks.0.resnets.1.conv1.bias
+up_blocks.0.resnets.1.time_emb_proj.weight
+up_blocks.0.resnets.1.time_emb_proj.bias
+up_blocks.0.resnets.1.norm2.weight
+up_blocks.0.resnets.1.norm2.bias
+up_blocks.0.resnets.1.conv2.weight
+up_blocks.0.resnets.1.conv2.bias
+up_blocks.0.resnets.1.conv_shortcut.weight
+up_blocks.0.resnets.1.conv_shortcut.bias
+up_blocks.0.resnets.2.norm1.weight
+up_blocks.0.resnets.2.norm1.bias
+up_blocks.0.resnets.2.conv1.weight
+up_blocks.0.resnets.2.conv1.bias
+up_blocks.0.resnets.2.time_emb_proj.weight
+up_blocks.0.resnets.2.time_emb_proj.bias
+up_blocks.0.resnets.2.norm2.weight
+up_blocks.0.resnets.2.norm2.bias
+up_blocks.0.resnets.2.conv2.weight
+up_blocks.0.resnets.2.conv2.bias
+up_blocks.0.resnets.2.conv_shortcut.weight
+up_blocks.0.resnets.2.conv_shortcut.bias
+up_blocks.0.upsamplers.0.conv.weight
+up_blocks.0.upsamplers.0.conv.bias
+up_blocks.1.attentions.0.norm.weight
+up_blocks.1.attentions.0.norm.bias
+up_blocks.1.attentions.0.proj_in.weight
+up_blocks.1.attentions.0.proj_in.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_q.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_k.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_v.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.v
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.v
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.v
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.1.attentions.0.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.1.attentions.0.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.1.attentions.0.transformer_blocks.0.ff.net.2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.ff.net.2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_q.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_k.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_v.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.v
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.v
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.v
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.1.attentions.0.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.1.attentions.0.transformer_blocks.0.norm1.weight
+up_blocks.1.attentions.0.transformer_blocks.0.norm1.bias
+up_blocks.1.attentions.0.transformer_blocks.0.norm2.weight
+up_blocks.1.attentions.0.transformer_blocks.0.norm2.bias
+up_blocks.1.attentions.0.transformer_blocks.0.norm3.weight
+up_blocks.1.attentions.0.transformer_blocks.0.norm3.bias
+up_blocks.1.attentions.0.proj_out.weight
+up_blocks.1.attentions.0.proj_out.bias
+up_blocks.1.attentions.1.norm.weight
+up_blocks.1.attentions.1.norm.bias
+up_blocks.1.attentions.1.proj_in.weight
+up_blocks.1.attentions.1.proj_in.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_q.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_k.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_v.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.v
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.v
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.v
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.1.attentions.1.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.1.attentions.1.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.1.attentions.1.transformer_blocks.0.ff.net.2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.ff.net.2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_q.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_k.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_v.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.v
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.v
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.v
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.1.attentions.1.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.1.attentions.1.transformer_blocks.0.norm1.weight
+up_blocks.1.attentions.1.transformer_blocks.0.norm1.bias
+up_blocks.1.attentions.1.transformer_blocks.0.norm2.weight
+up_blocks.1.attentions.1.transformer_blocks.0.norm2.bias
+up_blocks.1.attentions.1.transformer_blocks.0.norm3.weight
+up_blocks.1.attentions.1.transformer_blocks.0.norm3.bias
+up_blocks.1.attentions.1.proj_out.weight
+up_blocks.1.attentions.1.proj_out.bias
+up_blocks.1.attentions.2.norm.weight
+up_blocks.1.attentions.2.norm.bias
+up_blocks.1.attentions.2.proj_in.weight
+up_blocks.1.attentions.2.proj_in.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_q.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_k.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_v.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.v
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.v
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.v
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.1.attentions.2.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.1.attentions.2.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.1.attentions.2.transformer_blocks.0.ff.net.2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.ff.net.2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_q.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_k.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_v.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.v
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.v
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.v
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.1.attentions.2.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.1.attentions.2.transformer_blocks.0.norm1.weight
+up_blocks.1.attentions.2.transformer_blocks.0.norm1.bias
+up_blocks.1.attentions.2.transformer_blocks.0.norm2.weight
+up_blocks.1.attentions.2.transformer_blocks.0.norm2.bias
+up_blocks.1.attentions.2.transformer_blocks.0.norm3.weight
+up_blocks.1.attentions.2.transformer_blocks.0.norm3.bias
+up_blocks.1.attentions.2.proj_out.weight
+up_blocks.1.attentions.2.proj_out.bias
+up_blocks.1.resnets.0.norm1.weight
+up_blocks.1.resnets.0.norm1.bias
+up_blocks.1.resnets.0.conv1.weight
+up_blocks.1.resnets.0.conv1.bias
+up_blocks.1.resnets.0.time_emb_proj.weight
+up_blocks.1.resnets.0.time_emb_proj.bias
+up_blocks.1.resnets.0.norm2.weight
+up_blocks.1.resnets.0.norm2.bias
+up_blocks.1.resnets.0.conv2.weight
+up_blocks.1.resnets.0.conv2.bias
+up_blocks.1.resnets.0.conv_shortcut.weight
+up_blocks.1.resnets.0.conv_shortcut.bias
+up_blocks.1.resnets.1.norm1.weight
+up_blocks.1.resnets.1.norm1.bias
+up_blocks.1.resnets.1.conv1.weight
+up_blocks.1.resnets.1.conv1.bias
+up_blocks.1.resnets.1.time_emb_proj.weight
+up_blocks.1.resnets.1.time_emb_proj.bias
+up_blocks.1.resnets.1.norm2.weight
+up_blocks.1.resnets.1.norm2.bias
+up_blocks.1.resnets.1.conv2.weight
+up_blocks.1.resnets.1.conv2.bias
+up_blocks.1.resnets.1.conv_shortcut.weight
+up_blocks.1.resnets.1.conv_shortcut.bias
+up_blocks.1.resnets.2.norm1.weight
+up_blocks.1.resnets.2.norm1.bias
+up_blocks.1.resnets.2.conv1.weight
+up_blocks.1.resnets.2.conv1.bias
+up_blocks.1.resnets.2.time_emb_proj.weight
+up_blocks.1.resnets.2.time_emb_proj.bias
+up_blocks.1.resnets.2.norm2.weight
+up_blocks.1.resnets.2.norm2.bias
+up_blocks.1.resnets.2.conv2.weight
+up_blocks.1.resnets.2.conv2.bias
+up_blocks.1.resnets.2.conv_shortcut.weight
+up_blocks.1.resnets.2.conv_shortcut.bias
+up_blocks.1.upsamplers.0.conv.weight
+up_blocks.1.upsamplers.0.conv.bias
+up_blocks.2.attentions.0.norm.weight
+up_blocks.2.attentions.0.norm.bias
+up_blocks.2.attentions.0.proj_in.weight
+up_blocks.2.attentions.0.proj_in.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_q.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_k.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_v.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.v
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.v
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.v
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.2.attentions.0.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.2.attentions.0.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.2.attentions.0.transformer_blocks.0.ff.net.2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.ff.net.2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_q.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_k.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_v.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.v
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.v
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.v
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.2.attentions.0.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.2.attentions.0.transformer_blocks.0.norm1.weight
+up_blocks.2.attentions.0.transformer_blocks.0.norm1.bias
+up_blocks.2.attentions.0.transformer_blocks.0.norm2.weight
+up_blocks.2.attentions.0.transformer_blocks.0.norm2.bias
+up_blocks.2.attentions.0.transformer_blocks.0.norm3.weight
+up_blocks.2.attentions.0.transformer_blocks.0.norm3.bias
+up_blocks.2.attentions.0.proj_out.weight
+up_blocks.2.attentions.0.proj_out.bias
+up_blocks.2.attentions.1.norm.weight
+up_blocks.2.attentions.1.norm.bias
+up_blocks.2.attentions.1.proj_in.weight
+up_blocks.2.attentions.1.proj_in.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_q.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_k.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_v.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.v
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.v
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.v
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.2.attentions.1.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.2.attentions.1.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.2.attentions.1.transformer_blocks.0.ff.net.2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.ff.net.2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_q.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_k.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_v.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.v
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.v
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.v
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.2.attentions.1.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.2.attentions.1.transformer_blocks.0.norm1.weight
+up_blocks.2.attentions.1.transformer_blocks.0.norm1.bias
+up_blocks.2.attentions.1.transformer_blocks.0.norm2.weight
+up_blocks.2.attentions.1.transformer_blocks.0.norm2.bias
+up_blocks.2.attentions.1.transformer_blocks.0.norm3.weight
+up_blocks.2.attentions.1.transformer_blocks.0.norm3.bias
+up_blocks.2.attentions.1.proj_out.weight
+up_blocks.2.attentions.1.proj_out.bias
+up_blocks.2.attentions.2.norm.weight
+up_blocks.2.attentions.2.norm.bias
+up_blocks.2.attentions.2.proj_in.weight
+up_blocks.2.attentions.2.proj_in.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_q.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_k.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_v.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.v
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.v
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.v
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.2.attentions.2.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.2.attentions.2.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.2.attentions.2.transformer_blocks.0.ff.net.2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.ff.net.2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_q.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_k.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_v.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.v
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.v
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.v
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.2.attentions.2.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.2.attentions.2.transformer_blocks.0.norm1.weight
+up_blocks.2.attentions.2.transformer_blocks.0.norm1.bias
+up_blocks.2.attentions.2.transformer_blocks.0.norm2.weight
+up_blocks.2.attentions.2.transformer_blocks.0.norm2.bias
+up_blocks.2.attentions.2.transformer_blocks.0.norm3.weight
+up_blocks.2.attentions.2.transformer_blocks.0.norm3.bias
+up_blocks.2.attentions.2.proj_out.weight
+up_blocks.2.attentions.2.proj_out.bias
+up_blocks.2.resnets.0.norm1.weight
+up_blocks.2.resnets.0.norm1.bias
+up_blocks.2.resnets.0.conv1.weight
+up_blocks.2.resnets.0.conv1.bias
+up_blocks.2.resnets.0.time_emb_proj.weight
+up_blocks.2.resnets.0.time_emb_proj.bias
+up_blocks.2.resnets.0.norm2.weight
+up_blocks.2.resnets.0.norm2.bias
+up_blocks.2.resnets.0.conv2.weight
+up_blocks.2.resnets.0.conv2.bias
+up_blocks.2.resnets.0.conv_shortcut.weight
+up_blocks.2.resnets.0.conv_shortcut.bias
+up_blocks.2.resnets.1.norm1.weight
+up_blocks.2.resnets.1.norm1.bias
+up_blocks.2.resnets.1.conv1.weight
+up_blocks.2.resnets.1.conv1.bias
+up_blocks.2.resnets.1.time_emb_proj.weight
+up_blocks.2.resnets.1.time_emb_proj.bias
+up_blocks.2.resnets.1.norm2.weight
+up_blocks.2.resnets.1.norm2.bias
+up_blocks.2.resnets.1.conv2.weight
+up_blocks.2.resnets.1.conv2.bias
+up_blocks.2.resnets.1.conv_shortcut.weight
+up_blocks.2.resnets.1.conv_shortcut.bias
+up_blocks.2.resnets.2.norm1.weight
+up_blocks.2.resnets.2.norm1.bias
+up_blocks.2.resnets.2.conv1.weight
+up_blocks.2.resnets.2.conv1.bias
+up_blocks.2.resnets.2.time_emb_proj.weight
+up_blocks.2.resnets.2.time_emb_proj.bias
+up_blocks.2.resnets.2.norm2.weight
+up_blocks.2.resnets.2.norm2.bias
+up_blocks.2.resnets.2.conv2.weight
+up_blocks.2.resnets.2.conv2.bias
+up_blocks.2.resnets.2.conv_shortcut.weight
+up_blocks.2.resnets.2.conv_shortcut.bias
+up_blocks.2.upsamplers.0.conv.weight
+up_blocks.2.upsamplers.0.conv.bias
+up_blocks.3.attentions.0.norm.weight
+up_blocks.3.attentions.0.norm.bias
+up_blocks.3.attentions.0.proj_in.weight
+up_blocks.3.attentions.0.proj_in.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_q.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_k.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_v.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.v
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.v
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.v
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.3.attentions.0.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.3.attentions.0.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.3.attentions.0.transformer_blocks.0.ff.net.2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.ff.net.2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_q.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_k.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_v.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.v
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.v
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.v
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.3.attentions.0.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.3.attentions.0.transformer_blocks.0.norm1.weight
+up_blocks.3.attentions.0.transformer_blocks.0.norm1.bias
+up_blocks.3.attentions.0.transformer_blocks.0.norm2.weight
+up_blocks.3.attentions.0.transformer_blocks.0.norm2.bias
+up_blocks.3.attentions.0.transformer_blocks.0.norm3.weight
+up_blocks.3.attentions.0.transformer_blocks.0.norm3.bias
+up_blocks.3.attentions.0.proj_out.weight
+up_blocks.3.attentions.0.proj_out.bias
+up_blocks.3.attentions.1.norm.weight
+up_blocks.3.attentions.1.norm.bias
+up_blocks.3.attentions.1.proj_in.weight
+up_blocks.3.attentions.1.proj_in.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_q.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_k.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_v.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.v
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.v
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.v
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.3.attentions.1.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.3.attentions.1.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.3.attentions.1.transformer_blocks.0.ff.net.2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.ff.net.2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_q.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_k.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_v.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.v
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.v
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.v
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.3.attentions.1.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.3.attentions.1.transformer_blocks.0.norm1.weight
+up_blocks.3.attentions.1.transformer_blocks.0.norm1.bias
+up_blocks.3.attentions.1.transformer_blocks.0.norm2.weight
+up_blocks.3.attentions.1.transformer_blocks.0.norm2.bias
+up_blocks.3.attentions.1.transformer_blocks.0.norm3.weight
+up_blocks.3.attentions.1.transformer_blocks.0.norm3.bias
+up_blocks.3.attentions.1.proj_out.weight
+up_blocks.3.attentions.1.proj_out.bias
+up_blocks.3.attentions.2.norm.weight
+up_blocks.3.attentions.2.norm.bias
+up_blocks.3.attentions.2.proj_in.weight
+up_blocks.3.attentions.2.proj_in.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_q.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_k.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_v.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_out.0.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.to_out.0.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.v
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear_column.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear_column.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear_row.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_q.linear_row.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.v
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear_column.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear_column.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear_row.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_k.linear_row.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.v
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear_column.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear_column.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear_row.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn1.wo_v.linear_row.bias
+up_blocks.3.attentions.2.transformer_blocks.0.ff.net.0.proj.weight
+up_blocks.3.attentions.2.transformer_blocks.0.ff.net.0.proj.bias
+up_blocks.3.attentions.2.transformer_blocks.0.ff.net.2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.ff.net.2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_q.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_k.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_v.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_out.0.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.to_out.0.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.v
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear_column.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear_column.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear_row.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_q.linear_row.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.v
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear_column.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear_column.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear_row.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_k.linear_row.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.v
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear_column.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear_column.bias
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear_row.weight
+up_blocks.3.attentions.2.transformer_blocks.0.attn2.wo_v.linear_row.bias
+up_blocks.3.attentions.2.transformer_blocks.0.norm1.weight
+up_blocks.3.attentions.2.transformer_blocks.0.norm1.bias
+up_blocks.3.attentions.2.transformer_blocks.0.norm2.weight
+up_blocks.3.attentions.2.transformer_blocks.0.norm2.bias
+up_blocks.3.attentions.2.transformer_blocks.0.norm3.weight
+up_blocks.3.attentions.2.transformer_blocks.0.norm3.bias
+up_blocks.3.attentions.2.proj_out.weight
+up_blocks.3.attentions.2.proj_out.bias
+up_blocks.3.resnets.0.norm1.weight
+up_blocks.3.resnets.0.norm1.bias
+up_blocks.3.resnets.0.conv1.weight
+up_blocks.3.resnets.0.conv1.bias
+up_blocks.3.resnets.0.time_emb_proj.weight
+up_blocks.3.resnets.0.time_emb_proj.bias
+up_blocks.3.resnets.0.norm2.weight
+up_blocks.3.resnets.0.norm2.bias
+up_blocks.3.resnets.0.conv2.weight
+up_blocks.3.resnets.0.conv2.bias
+up_blocks.3.resnets.0.conv_shortcut.weight
+up_blocks.3.resnets.0.conv_shortcut.bias
+up_blocks.3.resnets.1.norm1.weight
+up_blocks.3.resnets.1.norm1.bias
+up_blocks.3.resnets.1.conv1.weight
+up_blocks.3.resnets.1.conv1.bias
+up_blocks.3.resnets.1.time_emb_proj.weight
+up_blocks.3.resnets.1.time_emb_proj.bias
+up_blocks.3.resnets.1.norm2.weight
+up_blocks.3.resnets.1.norm2.bias
+up_blocks.3.resnets.1.conv2.weight
+up_blocks.3.resnets.1.conv2.bias
+up_blocks.3.resnets.1.conv_shortcut.weight
+up_blocks.3.resnets.1.conv_shortcut.bias
+up_blocks.3.resnets.2.norm1.weight
+up_blocks.3.resnets.2.norm1.bias
+up_blocks.3.resnets.2.conv1.weight
+up_blocks.3.resnets.2.conv1.bias
+up_blocks.3.resnets.2.time_emb_proj.weight
+up_blocks.3.resnets.2.time_emb_proj.bias
+up_blocks.3.resnets.2.norm2.weight
+up_blocks.3.resnets.2.norm2.bias
+up_blocks.3.resnets.2.conv2.weight
+up_blocks.3.resnets.2.conv2.bias
+up_blocks.3.resnets.2.conv_shortcut.weight
+up_blocks.3.resnets.2.conv_shortcut.bias
+
+```

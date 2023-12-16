@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1701708785356
+updated: 1702619908786
 created: 1701279654189
 ---
 
@@ -38,4 +38,39 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 
 可以参考PhotoSwap这篇工作：PHOTOSWAP: Personalized Subject Swapping in Images
 
+
+
+
+## 关注interaction的视频、图像、场景的生成
+
+#interaction
+
+这里指的interaction主要就是人在现实生活中一些动作，注意并不是单一的motion，而是和物体之间的主被动关系，比如a people hold a cup 或者一个人削苹果，目前的生成方法，对于hold或者削这些动词应该都不敏感、不准确，生成的质量也一般。
+
+除了人之外，物体和物体之间的interaction，比如猫在玩球（这个可能已经被做了）。
+
+此外，人在复杂场景下的interaction，也可以考虑。
+
+二级想法：
+
+* 可以在identity保持和interaction结合起来做，比如定制化加interaction。
+* 依托文章：
+  * InteractDiffusion: Interaction Control in Text-to-Image Diffusion Models
+  * ![图 4](assets/images/ca4c038049a9a897f01d45625e44bd289619b427d73d06513d2e6a0ae22d6fd9.png)  
+
+
+* 做动词的textual inversion
+  * Revision 只是做了介词的inversion，但是对于hold，或者eat这样的动词，Revision能够实现么？
+
+* 可以在视频模态上，做interaction
+  * 其实就是把InteractDiffusion拓展到video。
+
+
+## 关于Instruct指导的图像编辑
+#image_editing
+#Instruction_following
+
+之前有人开发了InstructPix2Pix，使用指令来完成图像的编辑。那么基于指令的图像子属性的的编辑，或者基于指令的视觉子概念的学习以及应用编辑，是不是可以做一下？
+
+比如给定一张参考图像，我很喜欢这张图像的风格或者布局或者结构，对于用户来说只需要使用指令去表达希望提取什么属性，比如"Extracting the layout of the image"。第二步，用户希望将其应用到目标图像的编辑上，用户接着给出第二个指令“Applying the layout into the target image”。
 
