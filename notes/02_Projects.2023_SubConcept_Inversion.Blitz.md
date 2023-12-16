@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1702712436639
+updated: 1702742968132
 created: 1702692346732
 ---
 
@@ -24,6 +24,10 @@ created: 1702692346732
   * 之后写Method
   * 然后写实验
   * 最后写结论和摘要
+
+* 当前的问题：
+  * appearance inversion 有的时候会出现在背景上，需要解决
+    * 如果文本直接指定纯色背景可以吗？
 
 ---
 
@@ -143,15 +147,53 @@ created: 1702692346732
     * 定性
     * 定量
   * 跨类别的appearance inversion实验
+    * rock->horse/cat/dog/building  
   * 自定义shape的Shape Inversion实验
+  * 复杂文本+多物体的实验 比如 a dog in the appearance of *a, it is sitting on the grass
   * 消融实验
     * 去掉teacher encoder
     * 待设计
 
 
+---
+
+## **数据收集**
+* shape数据收集：基于2D shape structure Dataset中的类别，收集不同shape的数据
+  * 动物类别
+  * 城市建筑
+    * 基于现代建筑参考shape，生成 a old building
+    * 交通工具
+      * car
+    * 水果蔬菜
+      * 苹果-->橙子
+    * 人脸？
+      * 青年男人的脸型-->old man
+    * 日常用品
+      * 椅子
+* appearance数据收集
+  * 豹纹
+  * 黑白斑点
+  * 条状斑马，虎纹
+  * 撞色
+  * 纯色
+  * 树皮纹理
+  * 岩石纹理
+  * 布料
 
 
 
+---
+
+## **测试文本**
+
+* Appearance Inversion
+  * rock
+    * a horse in the appearance of *a, grazing peacefully in the farm
+    * a building in the appearance of *a, standing prominently on the main street.
+  * rock1
+    * a horse in the appearance of *a, grazing peacefully in the farm
+    * a building in the appearance of *a, standing prominently on the main street
+    * a T-shirt in the appearance of *a
 
 
 
