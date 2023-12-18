@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1702691532411
+updated: 1702901629700
 created: 1699497182153
 ---
 
@@ -48,6 +48,7 @@ created: 1699497182153
 ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:43:16
 * WarpDiffusion: Efficient Diffusion Model for High-Fidelity Virtual Try-on, 2023年12月7日12:38:09
 * SwiftBrush: One-Step Text-to-Image Diffusion Model with Variational Score Distillation，2023年12月11日14:00:07
+* Faster Diffusion: Rethinking the Role of UNet Encoder in Diffusion Models，2023年12月18日20:12:50
 ---
 
 # **3D** 
@@ -148,6 +149,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * HyperDreamer: Hyper-Realistic 3D Content Generation and Editing from a Single Image，2023年12月10日21:35:03
 * R2Human: Real-Time 3D Human Appearance Rendering from a Single Image，2023年12月12日13:19:39
 * 3DGEN: A GAN-based approach for generating novel 3D models from image data，2023年12月14日15:10:42
+* Stable Score Distillation for High-Quality 3D Generation，2023年12月18日20:13:32
 
 
 ## 单视角合成
@@ -172,11 +174,12 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * Mesh-Guided Neural Implicit Field Editing，2023年12月7日00:33:04
 * Learning Naturally Aggregated Appearance for Efficient 3D Editing，2023年12月12日13:16:22
 * SHAP-EDITOR: Instruction-guided Latent 3D Editing in Seconds，2023年12月15日10:46:09
+* LatentEditor: Text Driven Local Editing of 3D Scenes，2023年12月18日20:13:06
 
 ## NeRF
 * SANeRF-HQ: Segment Anything for NeRF in High Quality，https://arxiv.org/pdf/2312.01531.pdf，2023年12月7日00:02:40
 * NeRFiller: Completing Scenes via Generative 3D Inpainting，2023年12月10日
-* 
+* LAENeRF: Local Appearance Editing for Neural Radiance Fields, 2023年12月18日20:12:20
 *  
 
 --- 
@@ -224,6 +227,7 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * VideoLCM: Video Latent Consistency Model，2023年12月15日10:48:36
 * Motion Flow Matching for Human Motion Synthesis and Editing，2023年12月15日10:49:07
 * Neural Video Fields Editing，2023年12月15日10:50:26
+* IQNet: Image Quality Assessment Guided Just Noticeable Difference Prefiltering For Versatile Video Coding，2023年12月18日20:13:47
 ---
 
 # Human-interaction
@@ -231,6 +235,7 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * HOI-Diff: Text-Driven Synthesis of 3D Human-Object Interactions using Diffusion Models，2023年12月12日13:17:32
 * Stellar: Systematic Evaluation of Human-Centric Personalized Text-to-Image Methods，2023年12月12日13:18:14
 * LEMON: Learning 3D Human-Object Interaction Relation from 2D Images，2023年12月15日10:48:58
+* Ins-HOI: Instance Aware Human-Object Interactions Recovery，2023年12月18日20:12:32
 
 
 

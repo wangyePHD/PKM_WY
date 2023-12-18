@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1702742968132
+updated: 1702905489194
 created: 1702692346732
 ---
 
@@ -159,17 +159,33 @@ created: 1702692346732
 
 ## **数据收集**
 * shape数据收集：基于2D shape structure Dataset中的类别，收集不同shape的数据
+  * 基本shape
+    * 三角、正方形
+  * 抽象形状
+    * 五角星、心形
   * 动物类别
+    * 四肢动物
+      * 跳跃的狗
+      * 站立的马
+      * 奔跑的老虎
+      * 坐着的狼
+    * 水下动物：
+      * 游泳的鱼
+    * 飞翔动物：
+      * 飞翔的鸟
   * 城市建筑
     * 基于现代建筑参考shape，生成 a old building
-    * 交通工具
-      * car
-    * 水果蔬菜
-      * 苹果-->橙子
-    * 人脸？
-      * 青年男人的脸型-->old man
-    * 日常用品
-      * 椅子
+  * 交通工具
+    * car
+  * 水果蔬菜
+    * 苹果-->橙子
+  * 人脸？
+    * 青年男人的脸型-->old man
+    * 跳舞的人，得到跳舞的狗？
+  * 日常用品
+    * 椅子
+  * 多个物体？
+    * 一个跳跃狗和一个站立猫 -- 》 一个跳跃的猪和一个站立的马
 * appearance数据收集
   * 豹纹
   * 黑白斑点
@@ -197,3 +213,10 @@ created: 1702692346732
 
 
 
+* Shape Inversion
+  * 五角星
+    * a plush toy in the shape of *m
+  * 三角形
+    * a block toy in the shape of *m
+    * a marble in the shape of *m
+    * a cherry cake in the shape of *m
