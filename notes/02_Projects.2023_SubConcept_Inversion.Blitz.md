@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1703000432353
+updated: 1703040444333
 created: 1702692346732
 ---
 
@@ -166,7 +166,7 @@ created: 1702692346732
   * 动物类别
     * 四肢动物
       * **跳跃的狗**
-      * 站立的马 
+      * 吃草的马 
       * 奔跑的老虎
       * 坐着的狼
     * 水下动物：

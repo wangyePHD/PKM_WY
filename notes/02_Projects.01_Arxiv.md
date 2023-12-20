@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1702986021114
+updated: 1703046388875
 created: 1699497182153
 ---
 
@@ -18,6 +18,9 @@ created: 1699497182153
 * Charting New Territories: Exploring the Geographic and Geospatial Capabilities of Multimodal LLMs，https://arxiv.org/pdf/2311.14656.pdf，2023年11月27日
 * OneLLM: One Framework to Align All Modalities with Language，2023年12月7日12:37:54
 * Silkie: Preference Distillation for Large Visual Language Models，2023年12月19日19:38:31
+* Gemini: A Family of Highly Capable Multimodal Models，2023年12月20日12:26:27
+
+
 
 ## VLM
 * Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks，2023年11月13日，https://arxiv.org/pdf/2311.06242.pdf
@@ -44,6 +47,8 @@ created: 1699497182153
 * LoRA-Enhanced Distillation on Guided Diffusion Models，2023年12月13日12:43:33
 * FineControlNet: Fine-level Text Control for Image Generation with Spatially Aligned Text Control Injection, 2023年12月15日10:44:24
 * Guided Diffusion from Self-Supervised Diffusion Features，2023年12月15日10:51:01
+* On Inference Stability for Diffusion Models, 2023年12月20日12:24:19
+* 
 
 ## Efficient-Diffusion Model
 * LCM-LORA: A UNIVERSAL STABLE-DIFFUSION
@@ -61,6 +66,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * Enhancing Diffusion Models with 3D Perspective Geometry Constraints，2023年12月7日00:30:50
 * CAD: Photorealistic 3D Generation via Adversarial Distillation, 2023年12月12日13:15:43
 * Mosaic-SDF for 3D Generative Models，2023年12月15日10:47:23
+* Self-supervised Learning for Enhancing Geometrical Modeling in 3D-Aware Generative Adversarial Network
 
 ## 纹理上色
 * 3DStyle-Diffusion: Pursuing Fine-grained Text-driven 3D Stylization with 2D Diffusion Models, https://arxiv.org/pdf/2311.05464.pdf，2023年11月10日18:43:19
@@ -125,6 +131,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * Fine-Tuning InstructPix2Pix for Advanced Image Colorization,2023年12月11日13:58:25
 * HandDiffuse: Generative Controllers for Two-Hand Interactions via Diffusion Models，2023年12月11日13:58:39
 * Stable Rivers: A Case Study in the Application of Text-to-Image Generative Models for Earth Sciences，2023年12月14日15:12:23
+* Brush Your Text: Synthesize Any Scene Text on Images via Diffusion Model，2023年12月20日12:24:51
 
 
 ## 定制化
@@ -134,6 +141,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * DisControlFace: Disentangled Control for Personalized Facial Image Editing，2023年12月12日13:18:03
 * Concept-centric Personalization with Large-scale Diffusion Priors，2023年12月14日15:10:30
 * Compositional Inversion for Stable Diffusion Models，2023年12月14日15:11:29
+* Prompting Hard or Hardly Prompting: Prompt Inversion for Text-to-Image Diffusion Models，2023年12月20日12:24:38
 ---
 
 
@@ -151,6 +159,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * PI3D: Efficient Text-to-3D Generation with Pseudo-Image Diffusion，2023年12月15日10:48:47
 * SEEAvatar: Photorealistic Text-to-3D Avatar Generation with Constrained Geometry and Appearance，2023年12月15日10:49:20
 * VolumeDiffusion: Flexible Text-to-3D Generation with Efficient Volumetric Encoder，2023年12月19日19:39:36
+* Text-Image Conditioned Diffusion for Consistent Text-to-3D Generation，2023年12月20日12:26:11
 
 ## Image->3D
 * HyperDreamer: Hyper-Realistic 3D Content Generation and Editing from a Single Image，2023年12月10日21:35:03
@@ -254,4 +263,5 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 *  Disentangled Representation Learning for Controllable Person Image Generation，2023年12月12日13:20:34
 *  Towards Detailed Text-to-Motion Synthesis via Basic-to-Advance Hierarchical Diffusion Model,2023年12月19日19:37:45
 *  MVHuman: Tailoring 2D Diffusion with Multi-view Sampling For Realistic 3D Human Generation，2023年12月19日19:39:13
+*  HuTuMotion: Human-Tuned Navigation of Latent Motion Diffusion Models with Minimal Feedback，2023年12月20日12:25:36
 
