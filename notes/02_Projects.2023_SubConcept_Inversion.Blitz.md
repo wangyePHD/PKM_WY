@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1702905489194
+updated: 1703000432353
 created: 1702692346732
 ---
 
@@ -156,17 +156,17 @@ created: 1702692346732
 
 
 ---
-
+<!-- #TODO 三角形和五角星需要重新跑 -->
 ## **数据收集**
 * shape数据收集：基于2D shape structure Dataset中的类别，收集不同shape的数据
   * 基本shape
-    * 三角、正方形
+    * **三角**、正方形
   * 抽象形状
-    * 五角星、心形
+    * **五角星**、心形
   * 动物类别
     * 四肢动物
-      * 跳跃的狗
-      * 站立的马
+      * **跳跃的狗**
+      * 站立的马 
       * 奔跑的老虎
       * 坐着的狼
     * 水下动物：

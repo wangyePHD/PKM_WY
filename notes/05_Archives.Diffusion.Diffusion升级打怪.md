@@ -2,7 +2,7 @@
 id: wzk58ceytvl1uy6ngplmc9j
 title: Diffusion升级打怪
 desc: ''
-updated: 1702645413299
+updated: 1702953755044
 created: 1702643783495
 ---
 
@@ -40,3 +40,9 @@ created: 1702643783495
 
 ## **学习路线** 
 1.📚🧠📖先学习李宏毅的视频课程，学习Diffusion Model的数学原理 📚🧠📖
+
+
+
+
+## **学习笔记**
+* [[05_Archives.Diffusion.Diffusion升级打怪.李宏毅-Diffusion的数学原理]]

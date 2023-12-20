@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1702901629700
+updated: 1702986021114
 created: 1699497182153
 ---
 
@@ -17,9 +17,11 @@ created: 1699497182153
 * OtterHD: A High-Resolution Multi-modality Model, 2023年11月8日，https://arxiv.org/pdf/2311.04219.pdf
 * Charting New Territories: Exploring the Geographic and Geospatial Capabilities of Multimodal LLMs，https://arxiv.org/pdf/2311.14656.pdf，2023年11月27日
 * OneLLM: One Framework to Align All Modalities with Language，2023年12月7日12:37:54
+* Silkie: Preference Distillation for Large Visual Language Models，2023年12月19日19:38:31
 
 ## VLM
 * Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks，2023年11月13日，https://arxiv.org/pdf/2311.06242.pdf
+* Language-Assisted 3D Scene Understanding，2023年12月19日19:39:57
 
 ---
 
@@ -62,6 +64,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 
 ## 纹理上色
 * 3DStyle-Diffusion: Pursuing Fine-grained Text-driven 3D Stylization with 2D Diffusion Models, https://arxiv.org/pdf/2311.05464.pdf，2023年11月10日18:43:19
+* Paint-it: Text-to-Texture Synthesis via Deep Convolutional Texture Map Optimization and Physically-Based Rendering，2023年12月19日19:40:20
 
 
 ## Gaussian Splatting
@@ -92,6 +95,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * A Compact and Semantic Latent Space for Disentangled and Controllable Image Editing, 2023年12月14日15:10:14
 * AdapEdit: Spatio-Temporal Guided Adaptive Editing Algorithm for Text-Based Continuity-Sensitive Image Editing，2023年12月14日15:11:46
 * LIME: Localized Image Editing via Attention Regularization in Diffusion Models，2023年12月15日10:51:28
+* SCEdit: Efficient and Controllable Image Diffusion Generation via Skip Connection Editing，2023年12月19日19:40:10
 
 ## Generation
 * FoodFusion: A Latent Diffusion Model for Realistic Food Image Generation，2023年12月7日12:29:17
@@ -108,6 +112,8 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * SpeedUpNet: A Plug-and-Play Hyper-Network for Accelerating Text-to-Image Diffusion Models，2023年12月15日10:50:17
 * Semantic-Driven Initial Image Construction for Guided Image Synthesis in Diffusion Model，2023年12月15日10:50:46
 * Local Conditional Controlling for Text-to-Image Diffusion Models，2023年12月15日10:51:12
+* Your Student is Better Than Expected: Adaptive Teacher-Student Collaboration for Text-Conditional Diffusion Models，2023年12月19日19:38:06
+* Rich Human Feedback for Text-to-Image Generation，2023年12月19日19:39:01
 
 ## Inpainting
 * A Task is Worth One Word: Learning with Task Prompts for High-Quality Versatile Image Inpainting，2023年12月7日12:40:45
@@ -144,6 +150,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * DreamControl: Control-Based Text-to-3D Generation with 3D Self-Prior，2023年12月12日13:17:42
 * PI3D: Efficient Text-to-3D Generation with Pseudo-Image Diffusion，2023年12月15日10:48:47
 * SEEAvatar: Photorealistic Text-to-3D Avatar Generation with Constrained Geometry and Appearance，2023年12月15日10:49:20
+* VolumeDiffusion: Flexible Text-to-3D Generation with Efficient Volumetric Encoder，2023年12月19日19:39:36
 
 ## Image->3D
 * HyperDreamer: Hyper-Realistic 3D Content Generation and Editing from a Single Image，2023年12月10日21:35:03
@@ -175,6 +182,7 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * Learning Naturally Aggregated Appearance for Efficient 3D Editing，2023年12月12日13:16:22
 * SHAP-EDITOR: Instruction-guided Latent 3D Editing in Seconds，2023年12月15日10:46:09
 * LatentEditor: Text Driven Local Editing of 3D Scenes，2023年12月18日20:13:06
+* Plasticine3D: Non-rigid 3D editting with text guidance，2023年12月19日19:39:24
 
 ## NeRF
 * SANeRF-HQ: Segment Anything for NeRF in High Quality，https://arxiv.org/pdf/2312.01531.pdf，2023年12月7日00:02:40
@@ -228,6 +236,7 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * Motion Flow Matching for Human Motion Synthesis and Editing，2023年12月15日10:49:07
 * Neural Video Fields Editing，2023年12月15日10:50:26
 * IQNet: Image Quality Assessment Guided Just Noticeable Difference Prefiltering For Versatile Video Coding，2023年12月18日20:13:47
+* VidToMe: Video Token Merging for Zero-Shot Video Editing，2023年12月19日19:38:45
 ---
 
 # Human-interaction
@@ -236,10 +245,13 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * Stellar: Systematic Evaluation of Human-Centric Personalized Text-to-Image Methods，2023年12月12日13:18:14
 * LEMON: Learning 3D Human-Object Interaction Relation from 2D Images，2023年12月15日10:48:58
 * Ins-HOI: Instance Aware Human-Object Interactions Recovery，2023年12月18日20:12:32
+* Primitive-based 3D Human-Object Interaction Modelling and Programming，2023年12月19日19:38:19
 
 
 
 # Human
 *  HumanCoser: Layered 3D Human Generation via Semantic-Aware Diffusion Model，2023年12月12日13:20:05
 *  Disentangled Representation Learning for Controllable Person Image Generation，2023年12月12日13:20:34
+*  Towards Detailed Text-to-Motion Synthesis via Basic-to-Advance Hierarchical Diffusion Model,2023年12月19日19:37:45
+*  MVHuman: Tailoring 2D Diffusion with Multi-view Sampling For Realistic 3D Human Generation，2023年12月19日19:39:13
 

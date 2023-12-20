@@ -2,7 +2,7 @@
 id: f5ctxjqjklfa8z3w2blz13v
 title: 写作素材整理
 desc: ''
-updated: 1702909174873
+updated: 1702972719550
 created: 1702739835674
 ---
 
@@ -142,10 +142,21 @@ Related Work之 定制化图像生成
   * ![图 23](assets/images/935d2ae940c1a5572372fe64333a49994d8700eeb748107280759ca32163f1c3.png)  
 
 
+* 中文写
+  * DIffusion素材
+当然，以下是Markdown格式的内容：
 
 
+The diffusion model, a subclass of generative models, operates by progressively denoising a Gaussian prior `x_T` to reconstruct the original data `x_0`, such as natural images. The training objective `L_{DM}(\theta)` is defined as:
 
+$$
+L_{DM}(\theta) := \mathbb{E}_{t,x_0,\epsilon} \left[ \lVert \epsilon - \theta(x_t, t) \rVert^2 \right], \ \text{(1)}
+$$
 
+Here, `x_t` denotes the noisy image formed by introducing noise `\epsilon \sim N(0, I)` to `x_0`. The network `\theta(\cdot)` predicts and removes this added noise. The training process of the diffusion model consists of two stages: forward diffusion and backward denoising. The forward diffusion gradually introduces noise until the image becomes pure Gaussian noise. The backward denoising reverses this process by iteratively removing noise to reconstruct the original image. During inference, the diffusion model employs neural networks, typically adopting architectures like U-Net, to estimate and eliminate noise at each step, progressively reconstructing images from random nois。
 
+先定义LDM是什么，学习的目标是什么。基于Diffusion，他有什么不同
+之后，写SD是LDM的代表性工作，在本文中，我们的研究是基于Stable Diffusion model的。
 
+Stable Diffusion是LDM的代表性工作，被看作是公开的SOTA 文本到图像的生成器，在本文中，我们的研究基于Stable Diffusion model。
 
