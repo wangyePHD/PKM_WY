@@ -1,9 +1,8 @@
-#! https://zhuanlan.zhihu.com/p/672825806
 ---
 id: xrlz5cdo2wtsupn3nlw75bx
 title: 02 Argmax不可导怎么办？
 desc: ''
-updated: 1702877226204
+updated: 1703052505709
 created: 1702876286341
 ---
 
