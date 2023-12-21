@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1703086910985
+updated: 1703164699772
 created: 1702692346732
 ---
 
@@ -174,7 +174,9 @@ created: 1702692346732
     * 飞翔动物：
       * **飞翔的鸟**
   * 城市建筑
-    * 基于现代建筑参考shape，生成 a old building
+    * **基于现代建筑参考shape，生成 a old building**
+    * **地坛**
+    * **央视大楼**
   * 交通工具
     * car
   * 水果蔬菜
