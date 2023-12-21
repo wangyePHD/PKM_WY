@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1703046388875
+updated: 1703147369986
 created: 1699497182153
 ---
 
@@ -142,6 +142,15 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * Concept-centric Personalization with Large-scale Diffusion Priors，2023年12月14日15:10:30
 * Compositional Inversion for Stable Diffusion Models，2023年12月14日15:11:29
 * Prompting Hard or Hardly Prompting: Prompt Inversion for Text-to-Image Diffusion Models，2023年12月20日12:24:38
+
+
+## 概念擦除
+
+* All but One: Surgical Concept Erasing with Model Preservation in
+Text-to-Image Diffusion Models, 2023年12月21日16:29:42
+
+
+
 ---
 
 

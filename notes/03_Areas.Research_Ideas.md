@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1702619908786
+updated: 1703153827249
 created: 1701279654189
 ---
 
@@ -73,4 +73,17 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 之前有人开发了InstructPix2Pix，使用指令来完成图像的编辑。那么基于指令的图像子属性的的编辑，或者基于指令的视觉子概念的学习以及应用编辑，是不是可以做一下？
 
 比如给定一张参考图像，我很喜欢这张图像的风格或者布局或者结构，对于用户来说只需要使用指令去表达希望提取什么属性，比如"Extracting the layout of the image"。第二步，用户希望将其应用到目标图像的编辑上，用户接着给出第二个指令“Applying the layout into the target image”。
+
+
+
+## 给定参考图像，如何删减图像元素或者擦除图像属性
+#概念擦除
+
+当人们对目标图像或者生成图像中，不满意的地方进行编辑时，多都是基于mask的形式。人们大多关注的是如何加东西、我能不能做减东西？
+* 比如减去不满意的属性
+
+受启发的文章如下：
+
+![图 1](assets/images/b0d5baf37e72d3338101796f875c286b062e5c4c83f2d865042c5e8c1cb71116.png)  
+
 
