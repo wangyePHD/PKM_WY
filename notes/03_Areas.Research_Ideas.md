@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1703153827249
+updated: 1703210691722
 created: 1701279654189
 ---
 
@@ -64,6 +64,12 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 
 * 可以在视频模态上，做interaction
   * 其实就是把InteractDiffusion拓展到video。
+
+
+* 2023年12月22日10:02:25补充
+  * 能否制作一个专门关注interaction的数据集，然后做很好总结interaction的种类，用以支撑interaction的生成和编辑。
+  * 这个数据集可以是image，也可以是video，同时最好是支持多种模态，比如文本，关系图，图像等
+
 
 
 ## 关于Instruct指导的图像编辑
