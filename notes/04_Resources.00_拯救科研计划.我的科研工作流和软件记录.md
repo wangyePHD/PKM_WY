@@ -2,7 +2,7 @@
 id: qqsd41294ohovwe0x2cfyz4
 title: 我的科研工作流和软件记录
 desc: ''
-updated: 1702196935880
+updated: 1703222515503
 created: 1701398414450
 ---
 
@@ -34,9 +34,14 @@ created: 1701398414450
 
 ## **论文阅读工具**
 
-* zo
+* PDFGear
 * UPDF
 * youtube+chatgpt+具体prompt，总结论文
+
+
+## **公众号阅读神器**
+* 微信公众号文章浏览器打开，选择自己感兴趣的内容
+* 然后使用chrome插件**copy-as-markdown** 右键复制
 
 
 

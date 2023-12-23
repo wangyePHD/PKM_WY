@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1703086910985
+updated: 1703310486579
 created: 1702692346732
 ---
 
@@ -19,9 +19,9 @@ created: 1702692346732
   * ~~确定定量评估指标和评测方式~~
   * ~~确定接下来要做的实验~~
 * 论文写作
-  * 先写Related Work
+  * ~~先写Related Work~~
   * 后写Introduction
-  * 之后写Method
+  * ~~之后写Method~~
   * 然后写实验
   * 最后写结论和摘要
 
@@ -172,9 +172,13 @@ created: 1702692346732
     * 水下动物：
       * 游泳的鱼
     * 飞翔动物：
-      * **飞翔的鸟**
+      * 4张鸟类图像
   * 城市建筑
-    * 基于现代建筑参考shape，生成 a old building
+    * **基于现代建筑参考shape，生成 a old building**
+    * **地坛**
+    * **央视大楼**
+    * 埃菲尔铁塔
+    * 比萨斜塔
   * 交通工具
     * car
   * 水果蔬菜
