@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1703210691722
+updated: 1703260406783
 created: 1701279654189
 ---
 
@@ -93,3 +93,20 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 ![图 1](assets/images/b0d5baf37e72d3338101796f875c286b062e5c4c83f2d865042c5e8c1cb71116.png)  
 
 
+
+## 符合场景要求的视频编辑
+
+比如给定一个场景，我想在这个视频场景中添加一些事物。比如给定一个living room。我希望增加一只猫从沙发跳到了地板。
+
+受启发的文章：
+
+![图 2](assets/images/e0cf2463212b6f1b3b84c5713b001cdbdea1329ecd7a6554b2a668886c48f45c.png)  
+
+
+
+## 给定参考图，且子属性可控的单张静态图像动画生成
+
+给定一张参考图像，用户可能只是对当前参考图像的子属性感兴趣，希望从图像上提取该目标属性，然后使用文本驱动生成一张子属性可控的定制图像的动画。
+
+受启发的工作：
+* ![图 3](assets/images/2a3e7d1e0aa2c686ca20ccbe3f87573c42222e71fffa83f3182ee6f6832b3fe1.png)  
