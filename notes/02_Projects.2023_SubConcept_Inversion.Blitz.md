@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1703310486579
+updated: 1703489908370
 created: 1702692346732
 ---
 
@@ -167,12 +167,12 @@ created: 1702692346732
     * 四肢动物
       * **跳跃的狗**
       * **吃草的马**
-      * 奔跑的老虎
-      * 坐着的狼
+      * **站立的猫**
+      * **坐着的狼**
     * 水下动物：
       * 游泳的鱼
     * 飞翔动物：
-      * 4张鸟类图像
+      * **4张鸟类图像**
   * 城市建筑
     * **基于现代建筑参考shape，生成 a old building**
     * **地坛**
@@ -224,3 +224,9 @@ created: 1702692346732
     * a block toy in the shape of *m
     * a marble in the shape of *m
     * a cherry cake in the shape of *m
+  * bird
+    * a parrot in the shape of *m 
+    * a canary in the shape of *m
+    * a pigeon in the shape of *m
+
+

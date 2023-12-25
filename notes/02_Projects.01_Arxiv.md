@@ -2,7 +2,7 @@
 id: xutx0mtszok5w9q8n6d19xt
 title: 01_Arxiv
 desc: ''
-updated: 1703214924501
+updated: 1703481661582
 created: 1699497182153
 ---
 
@@ -107,6 +107,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * LIME: Localized Image Editing via Attention Regularization in Diffusion Models，2023年12月15日10:51:28
 * SCEdit: Efficient and Controllable Image Diffusion Generation via Skip Connection Editing，2023年12月19日19:40:10
 * HyperEditor: Achieving Both Authenticity and Cross-Domain Capability in Image Editing via Hypernetworks，2023年12月22日11:14:46
+* Tuning-Free Inversion-Enhanced Control for Consistent Image Editing，2023年12月25日13:20:36
 
 ## Generation
 * FoodFusion: A Latent Diffusion Model for Realistic Food Image Generation，2023年12月7日12:29:17
@@ -151,6 +152,7 @@ ACCELERATION MODULE, https://arxiv.org/pdf/2311.05556.pdf，2023年11月10日18:
 * Prompting Hard or Hardly Prompting: Prompt Inversion for Text-to-Image Diffusion Models，2023年12月20日12:24:38
 * PIA: Your Personalized Image Animator via Plug-and-Play Modules in Text-to-Image Models，2023年12月22日11:12:41
 * DreamTuner: Single Image is Enough for Subject-Driven Generation，2023年12月22日11:13:52
+* DreamDistribution: Prompt Distribution Learning for Text-to-Image Diffusion Models, 2023年12月25日13:20:19
 
 
 ## 概念擦除
@@ -272,6 +274,7 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * A Strong Baseline for Temporal Video-Text Alignment，2023年12月22日11:12:29
 * Fairy: Fast Parallelized Instruction-Guided Video-to-Video Synthesis，2023年12月22日11:13:25
 * Ponymation: Learning 3D Animal Motions from Unlabeled Online Videos，2023年12月22日11:14:19
+* Plan, Posture and Go: Towards Open-World Text-to-Motion Generation，2023年12月25日13:20:51
   
 
 
@@ -285,6 +288,7 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 * LEMON: Learning 3D Human-Object Interaction Relation from 2D Images，2023年12月15日10:48:58
 * Ins-HOI: Instance Aware Human-Object Interactions Recovery，2023年12月18日20:12:32
 * Primitive-based 3D Human-Object Interaction Modelling and Programming，2023年12月19日19:38:19
+* 
 
 
 
@@ -294,4 +298,5 @@ Controllable Text-to-3D Generation，https://arxiv.org/pdf/2311.14494.pdf，2023
 *  Towards Detailed Text-to-Motion Synthesis via Basic-to-Advance Hierarchical Diffusion Model,2023年12月19日19:37:45
 *  MVHuman: Tailoring 2D Diffusion with Multi-view Sampling For Realistic 3D Human Generation，2023年12月19日19:39:13
 *  HuTuMotion: Human-Tuned Navigation of Latent Motion Diffusion Models with Minimal Feedback，2023年12月20日12:25:36
+*  Plan, Posture and Go: Towards Open-World Text-to-Motion Generation，2023年12月25日13:21:00
 
