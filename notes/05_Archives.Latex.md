@@ -2,7 +2,7 @@
 id: nf2b192z7t7gu0zn2ysdf46
 title: Latex
 desc: ''
-updated: 1702827653030
+updated: 1703517516750
 created: 1702822961205
 ---
 
@@ -43,3 +43,9 @@ created: 1702822961205
 ![图 0](assets/images/ca0a7c1b9843ebb7a01859dd71ff482a10b0c62c599a3efb03823678db4f726d.png)  
 
 ![图 1](assets/images/0de18eca120a36eca4aa4676114e1fbba5e282d7ef6e896393ca0667bdab5bd7.png)  
+
+
+
+## Latex 让每个item顶格
+
+* https://blog.csdn.net/weixin_35749786/article/details/129073206

@@ -2,7 +2,7 @@
 id: rqtlxyl49iqhdwpuq8zvwdu
 title: Blitz for SubConcept Inversion
 desc: ''
-updated: 1703489908370
+updated: 1703600651218
 created: 1702692346732
 ---
 
@@ -178,7 +178,10 @@ created: 1702692346732
     * **地坛**
     * **央视大楼**
     * 埃菲尔铁塔
-    * 比萨斜塔
+    * **比萨斜塔**
+  * 物品
+    * 剑
+    * 鼎   
   * 交通工具
     * car
   * 水果蔬菜
@@ -230,3 +233,29 @@ created: 1702692346732
     * a pigeon in the shape of *m
 
 
+---
+
+## 2023.12.26 接下来要做的事情
+
+* 整理好现在的shape dataset
+  * 基本形状整理了三角和五角星
+  * ~~鸟类整理好了~~
+  * ~~动物整理好了~~
+  * 建筑目前整理了央视大楼，地坛，比萨斜塔
+  * human目前整理了站立，
+    * walking未整理
+    * sitting未整理
+    * jumping未整理
+* 整理好现在的appearance dataset
+  * ~~撞色狗~~ 
+  * ~~奶牛~~
+  * ~~猎豹~~
+  * ~~斑马~~
+  * ~~虎纹~~
+  * ~~岩石~~
+* 写Metric测试代码，评估shape metric
+* 写Metric测试代码，评估appearance metric
+* 在上述基础上，跑对比实验P+
+* 在上述基础上，跑对比实验Prospect
+* 绘图
+* 写作
