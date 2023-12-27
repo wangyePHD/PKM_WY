@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1703260406783
+updated: 1703658463707
 created: 1701279654189
 ---
 
@@ -110,3 +110,9 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 
 受启发的工作：
 * ![图 3](assets/images/2a3e7d1e0aa2c686ca20ccbe3f87573c42222e71fffa83f3182ee6f6832b3fe1.png)  
+
+
+## 给定多张参考图，做Human-centric Interaction-enhanced multiple object 定制化生成：
+
+比如给一张人的照片，给一张狗的照片，给一张苹果的照片，然后输入文本“一个人一边吃苹果，一遍遛狗。” 我们希望生成符合上述描述的图像，并且Interaction一定要准确！
+
