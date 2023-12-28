@@ -2,12 +2,16 @@
 id: wzk58ceytvl1uy6ngplmc9j
 title: Diffusion升级打怪
 desc: ''
-updated: 1703132597218
+updated: 1703700173060
 created: 1702643783495
 ---
 
 > 从今天开始正式从头开始学习Diffusion，包括数学原理，关键论文，底层代码，当前的小领域进展，论文总结等。
 >
+
+## **进展情况**
+* 基于李宏毅老师的视频，DDPM、VAE的底层数学原理已经弄懂了
+
 
 ## **参考资料**：
 

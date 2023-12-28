@@ -2,7 +2,7 @@
 id: 60shrqfgtlcqbijemyzrbvl
 title: A Recipe for Scaling up Text-to-Video Generation with Text-free Videos
 desc: ''
-updated: 1703667340294
+updated: 1703667497881
 created: 1703665098253
 ---
 
