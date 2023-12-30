@@ -1,8 +1,8 @@
 ---
 id: wf2i82nyvtzhwepbxjhwt5j
-title: 学术论文图标绘制
+title: 学术论文图表绘制
 desc: ''
-updated: 1702710027347
+updated: 1703832822889
 created: 1702709442499
 ---
 
@@ -15,4 +15,19 @@ created: 1702709442499
 
 
 
+
+
+
+## 图
+
+
+### teaser图
+
+![图 0](assets/images/bd21e14f8b33e581f59c1a82c25fb8859fc862617349be68e307b126d31faad2.png)  
+    
+
+
+### Pipeline
+
+![图 1](assets/images/7d183891f94c5f3720b6af2f9e0c6e5c780ac37f32751a46d3e397c1fdc0c396.png)  
 
