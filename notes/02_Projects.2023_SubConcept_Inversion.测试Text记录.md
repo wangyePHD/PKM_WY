@@ -2,7 +2,7 @@
 id: pvf9cm9kplmookd1ucvdf9k
 title: 测试Text记录
 desc: ''
-updated: 1703924476601
+updated: 1703950638918
 created: 1703853104178
 ---
 
@@ -12,8 +12,14 @@ created: 1703853104178
 * leaf
   * [x] hat
   * [x] vase
-  * wallpaper
-  * phone case
-  * scarf
-  * rug
+  * ~~wallpaper~~
+  * [x] phone case
+  * ~~scarf~~
+  * ~~rug~~
+  * oil painting
+  * curtain
+  * dish
+  * cup
+  
+
 
