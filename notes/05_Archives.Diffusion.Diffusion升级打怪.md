@@ -2,7 +2,7 @@
 id: wzk58ceytvl1uy6ngplmc9j
 title: Diffusion升级打怪
 desc: ''
-updated: 1703778157248
+updated: 1704000910203
 created: 1702643783495
 ---
 
@@ -46,9 +46,9 @@ created: 1702643783495
 ---
 
 ## **学习路线** 
-1. 📚🧠📖先学习李宏毅的视频课程，学习Diffusion Model的数学原理 📚🧠📖
+1. [x] 📚🧠📖先学习李宏毅的视频课程，学习Diffusion Model的数学原理 📚🧠📖
    1. 笔记在readpaper 
-2. 学习Conditional diffusion models的基础知识，技术
+2. [x] 学习Conditional diffusion models的基础知识，技术
    1. Classifier guidance
    2. Classifier-free guidance
    3. https://sander.ai/2022/05/26/guidance.html
