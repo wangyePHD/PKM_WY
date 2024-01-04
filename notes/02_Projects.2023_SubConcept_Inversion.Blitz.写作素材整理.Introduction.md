@@ -2,7 +2,7 @@
 id: lqhjl119ygemlqpxsxyrnzz
 title: Introduction
 desc: ''
-updated: 1704369047811
+updated: 1704390203414
 created: 1704292440737
 ---
 
@@ -95,4 +95,15 @@ The paper shows that P+ provides greater control over image synthesis by disenta
 
 第五段：
 
-这篇论文提出了一种创新且简洁的框架，用于在仅有单张参考图的条件下，实现属性级别的定制生成，涵盖了shape和appearance。我们的基本理念如图2所示。我们的核心见解在于：图像的视觉属性，包括shape和appearance，是由Diffusion Unet的Encoder和Decoder学习得到的。首先，我们利用预训练的视觉encoder提取参考图像的视觉特征。接着，我们设计了两个Filter Module，分别是shape filter module和appearance filter module，用于通过过滤冗余特征提取与特定属性相关的信息。随后，我们将经过滤的属性特征与文本prompt的embedding融合，生成多模态融合特征，从而增强文本embedding的细节表达能力。最后，我们将多模态融合特征注入至属性Stable Diffusion模型作为条件，然后采用属性-aware的微调策略，精确学习和定制shape和appearance视觉属性。
+这篇论文提出了一种创新且简洁的框架，用于在仅有单张参考图的条件下，实现属性级别的定制生成，涵盖了shape和appearance。我们的基本理念如图2所示。我们的核心见解在于：Diffusion Unet的encoder和decoder分别关注了不同的视觉属性，encoder负责学习shape属性，decoder负责学习appearance属性，即使在给定单张参考图像的情况下，通过设置合理微调策略，也能实现精准的属性定制化。
+首先，我们利用预训练的视觉encoder提取参考图像的视觉特征。接着，我们设计了两个Filter Module，分别是shape filter module和appearance filter module，用于通过过滤冗余特征提取与特定属性相关的信息。随后，我们将经过滤的属性特征与文本prompt的embedding融合，生成多模态融合特征，从而增强文本embedding的细节表达能力。最后，我们将多模态融合特征注入至属性Stable Diffusion模型作为条件，然后采用属性-aware的微调策略，精确学习和定制shape和appearance视觉属性。
+
+基于此，一个微不足道的方法是分别微调Diffusion Unet的encoder和decoder来学习特定的视觉属性。然而这样的做法并不能实现属性level的定制化。其主要的原因是在仅仅给定一张参考图的情况下，直接微调Unet会导致严重的过拟合。因此，我们提出设计一个网络去预测权重的偏移量而不是直接更新Unet参数权重。这样的做法采用更加平滑的方式进行参数更新，进一步降低了单张图像微调Unet时的过拟合风险。
+
+
+为了评估我们的方法，我们收集了一个跨多类别的属性定制化数据集，共包括shape 和appearance两个子数据集。详细信息请参考\ref{}. 在这个数据集上，相比于其他方法我们在shape属性定制化和appearance属性定制化上取得了SOTA的性能。我们的方法可以实现精准的属性学习，同时支持类别跨度大的属性级别的定制化图像生成。
+
+我们的贡献如下：
+* 我们提出了一个简单但是高效的框架，能够实现属性级别的图像定制化生成，并仅仅需要一张参考图像。这极大的降低了我们方法对数据量的依赖并进一步提高了方法的可用性。
+* 我们认为Diffusion Unet的encoder和decoder是分别负责shape和appearance属性的学习，我们提出使用更加平滑的方式预测权重更新的偏移量而不是直接微调更新权重，极大的降低了过拟合风险，实现了高效的属性定制化。
+* 大量定性和定量的实验标明，我们的方法在属性level的定制上取得了SOTA的性能。
