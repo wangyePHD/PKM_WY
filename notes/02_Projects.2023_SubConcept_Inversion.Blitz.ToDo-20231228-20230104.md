@@ -2,7 +2,7 @@
 id: zdig668f4h0g9lilw76ikzb
 title: ToDo-20231228-20230104
 desc: ''
-updated: 1703923212583
+updated: 1704093376645
 created: 1703773107353
 ---
 
@@ -90,3 +90,23 @@ created: 1703773107353
 ## Note
 
 * 避免使用背景纹理图作为appearance 参考图像
+
+
+
+
+## 20240101
+
+## TODO
+* 定量测试方案
+* 定性结果整理
+
+
+
+## Doing
+* 训练新收集的appearance数据
+
+
+
+## Done
+* Appearance图像归类
+* Appearance图像收集

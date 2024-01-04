@@ -1,9 +1,8 @@
-#! https://zhuanlan.zhihu.com/p/673798599
 ---
 id: 2inf4xe80m1tq2c9lv0opxn
 title: 论文走进来带出去-倒金字塔模型
 desc: ''
-updated: 1703316255135
+updated: 1704173201452
 created: 1703312239316
 ---
 
@@ -86,9 +85,10 @@ https://www.zhihu.com/column/c_1712783492344135681
 
 
 * **工具：**
+  * 
   * [PDF助手](https://poe.com/Summarise)
   * new bing side bar
-  * 等等
+  * [苏神的刷论文工具](https://papers.cool/)
 
 * **prompt：**
   * 假如我是五年级的小学生，你是非常专业的人工智能专业的教授，我希望你可以向我介绍这篇论文，主要从以下几点回答：研究背景，研究动机，研究方法，贡献和创新点，相关工作。并分点作答。请以markdown格式输出，要求子标题加粗，重点加粗。 (专业学术术语可以直接使用英文，无需翻译)。

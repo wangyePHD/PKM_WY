@@ -2,7 +2,7 @@
 id: wzk58ceytvl1uy6ngplmc9j
 title: Diffusion升级打怪
 desc: ''
-updated: 1704000910203
+updated: 1704115967506
 created: 1702643783495
 ---
 
@@ -52,14 +52,17 @@ created: 1702643783495
    1. Classifier guidance
    2. Classifier-free guidance
    3. https://sander.ai/2022/05/26/guidance.html
-3. accelerate sampling process
-   1. DDIM
+3. [x] accelerate sampling process
+   1. [x] DDIM
    2. LCM
-4. 领域分类，代表工作
+4. 学习图像可动画和视频编辑的相关工作
+5. 领域分类，代表工作
    1. T2I
    2. I2I
    3. Image Editing
    4. Video
+
+
 
 
 

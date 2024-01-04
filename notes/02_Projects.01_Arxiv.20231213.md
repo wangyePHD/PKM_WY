@@ -1,4 +1,3 @@
-#! https://zhuanlan.zhihu.com/p/671988914
 ---
 id: hzru27uvv2u47t9p3bqgr9m
 title: '20231213'
