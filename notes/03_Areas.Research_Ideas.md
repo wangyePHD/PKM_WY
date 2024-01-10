@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1703658463707
+updated: 1704881478402
 created: 1701279654189
 ---
 
@@ -102,6 +102,8 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 
 ![图 2](assets/images/e0cf2463212b6f1b3b84c5713b001cdbdea1329ecd7a6554b2a668886c48f45c.png)  
 
+这个事情能否做到图像上，比如给定一个场景，然后文本基于这个场景，生成和场景进行交互的人或者其他事物。
+
 
 
 ## 给定参考图，且子属性可控的单张静态图像动画生成
@@ -115,4 +117,14 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 ## 给定多张参考图，做Human-centric Interaction-enhanced multiple object 定制化生成：
 
 比如给一张人的照片，给一张狗的照片，给一张苹果的照片，然后输入文本“一个人一边吃苹果，一遍遛狗。” 我们希望生成符合上述描述的图像，并且Interaction一定要准确！
+
+
+
+
+
+## 情感定制化
+
+受启发的工作：
+
+![图 4](assets/images/7c681f5effe9be79533dbcdb2fec30589de9c094640f2f760c0186997ff617e6.png)  
 
