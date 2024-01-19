@@ -74,7 +74,7 @@ workspace:
     enableFullHierarchyNoteTitle: false
     enablePersistentHistory: false
 preview:
-    theme: custom
+    theme: light
     enableFMTitle: true
     enableNoteTitleForLink: true
     enableFrontmatterTags: true
@@ -92,8 +92,6 @@ publishing:
         - root
     writeStubs: false
     siteRootDir: docs
-    assetsPrefix: PKM_WY
-    siteUrl: https://wangyephd.github.io
     seo:
         title: Dendron
         description: Personal Knowledge Space
@@ -109,3 +107,5 @@ publishing:
     enableTaskNotes: true
     enablePrettyLinks: true
     searchMode: search
+    assetsPrefix: PKM_WY
+    siteUrl: https://wangyephd.github.io

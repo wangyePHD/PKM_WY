@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1704881478402
+updated: 1705585299323
 created: 1701279654189
 ---
 
@@ -128,3 +128,14 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 
 ![图 4](assets/images/7c681f5effe9be79533dbcdb2fec30589de9c094640f2f760c0186997ff617e6.png)  
 
+
+
+
+## 更加反映人的需求的多轮对话定制
+
+简单来说，就是定制化一次，是否能够达到用户的要求呢？
+是否可以引入LLM 做多轮定制？
+
+
+## 文化的定制化？
+SCoFT: Self-Contrastive Fine-Tuning for Equitable Image Generation
