@@ -13,7 +13,7 @@ created: 1701258209464
 
 我们使用leopard图像作为reference图，然后训练Student Appearance Inversion模型。训练的固定文本prompt为“the appearance of *a”。 训练和推理所用的leopard图像均已剔除了背景，防止干扰。然后我们分别测试了以下四个prompt，查看生成的图像结果。
 
-目前采用的方式是，Student输入纯噪音，然后希望其能够生成DINO视角下的appearance信息。
+目前采用的方式是，Student输入纯噪音，然后希望其能够生成DINO视角下的appearance信息。88888
 
 * the appearance of *a的生成结果
 * a cat in the appearance of *a的生成结果

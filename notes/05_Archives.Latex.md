@@ -46,6 +46,6 @@ created: 1702822961205
 
 
 
-## Latex 让每个item顶格
+## Latex 让每个item 去掉缩进
 
-* https://blog.csdn.net/weixin_35749786/article/details/129073206
+* https://www.jianshu.com/p/97d9c25b649e
