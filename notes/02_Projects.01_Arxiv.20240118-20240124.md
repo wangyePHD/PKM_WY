@@ -68,3 +68,69 @@ created: 1706148152567
 这篇论文试图解决的问题是多主体引导的文本到视频（Text-to-Video, T2V）生成。具体来说，论文提出了一个名为CustomVideo的框架，它能够根据文本提示和多个主题（subjects）生成保持身份（identity-preserving）的视频。这个框架旨在处理多个对象同时出现在视频中的场景，并且确保这些对象能够被清晰地区分和识别。
 
 ![图 5](assets/images/c924175f2cd139d046e929e1cc485418dbe35925fa2673c71389ff2a65a3e39e.png)  
+
+
+## Image Translation as Diffusion Visual Programmers
+
+#image_generation
+#paper_idea
+
+![图 6](assets/images/7dc292809d609053be13a570da355eea6d6688c2aeaa3cdcaaecbf53c3c0f749.png)  
+
+这篇论文介绍了Diffusion Visual Programmer (DVP)，一个新颖的神经符号图像翻译框架。
+
+
+
+## Synthesizing Moving People with 3D Control
+
+#action
+#motion
+#paper_idea
+
+![图 7](assets/images/047eaf12d599379feac0ec23132d4261e2d25ad5fc01ae896ccd5dfee28422bd.png)  
+
+这篇论文试图解决的问题是如何从单张图像中生成一个人物的动画，使其模仿另一个人物的动作
+
+
+
+
+
+## ActAnywhere: Subject-Aware Video Background Generation
+
+#video_generation
+#paper_idea
+
+![图 8](assets/images/fb1292edf67db18de1433ffc82ec3d82f5d40268c990df0d308c93c88ab5124e.png)  
+
+ 这篇论文试图解决的问题是自动生成与前景主体动作相匹配的视频背景。具体来说，它关注于如何创建一个视频背景，该背景能够与前景主体的运动和外观相协调，同时遵循艺术家的创意意图。
+
+
+
+## Sat2Scene: 3D Urban Scene Generation from Satellite Images with Diffusion
+
+#scene_generation
+#paper_idea
+
+![图 9](assets/images/574f98bbda5a823a15c102781a91ff2deb25dc9f58b453c3e0d310e84e2cc469.png)  
+
+这篇论文试图解决的问题是如何直接从卫星图像生成3D城市场景，特别是在处理大规模场景和显著视角变化时的挑战
+
+
+
+## Dream360: Diverse and Immersive Outdoor Virtual Scene Creation via Transformer-Based 360 Image Outpainting
+
+#scene_generation
+
+![图 10](assets/images/4fa81b8746530ba9c0bea8dd96f82352d50a1c07f5b80e094907826e51a87583.png)  
+
+
+
+## Inflation with Diffusion: Efficient Temporal Adaptation for Text-to-Video Super-Resolution
+
+#video_generation
+
+![图 11](assets/images/68f8b46efecfd62bc9148f25fdd9e8b74ed1f27cbe06d7a5763bbe53448b49fc.png)  
+
+
+这篇论文试图解决的问题是如何有效地将文本到图像的超分辨率（Super-Resolution, SR）模型应用于文本到视频的超分辨率任务。
+
