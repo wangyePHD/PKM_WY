@@ -2,7 +2,7 @@
 id: oht6nxx4n8es9tifnzxb96l
 title: 白嫖gpt4和gpts教程
 desc: ''
-updated: 1706361219597
+updated: 1706369187496
 created: 1706360452219
 ---
 
@@ -14,3 +14,5 @@ created: 1706360452219
 * 左上角模型选择Alpha Models ----GPT4(Mobile)可不限次数使用
 
 * [GPTs的汇集网站](https://gpts.works/)
+
+

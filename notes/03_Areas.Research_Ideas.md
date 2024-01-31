@@ -2,7 +2,7 @@
 id: 61cg2sqsm3yisalx3gjo03r
 title: Research_Ideas
 desc: ''
-updated: 1705585299323
+updated: 1706419058717
 created: 1701279654189
 ---
 
@@ -139,3 +139,14 @@ StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter
 
 ## 文化的定制化？
 SCoFT: Self-Contrastive Fine-Tuning for Equitable Image Generation
+
+
+## 定制+连环画
+已经有人做了
+* 人物：
+  * 给定一张人物照片，希望生成一张符合该人物的连环画。比如爱因斯坦，爱因斯坦和助手打电话，打完电话后爱因斯坦去书房工作，爱因斯坦累了去卧室休息，助手来了和爱因斯坦交流
+* 不一定要限于人物，也可以给定一张场景，希望生成一张符合该场景的连环画。比如给定一个城市，希望生成一张城市的连环画。
+* 相关文章
+  * fastcomposer
+  * StoryGPT-V: Large Language Models as Consistent Story Visualizers
+  * Make-A-Storyboard
