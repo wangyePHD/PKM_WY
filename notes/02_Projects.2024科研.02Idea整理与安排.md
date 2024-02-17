@@ -1,6 +1,6 @@
 ---
 id: 8v4hee3ci490pc0pbhsybqn
-title: Idea整理与安排
+title: 02Idea整理与安排
 desc: ''
 updated: 1707110254023
 created: 1706949532321
