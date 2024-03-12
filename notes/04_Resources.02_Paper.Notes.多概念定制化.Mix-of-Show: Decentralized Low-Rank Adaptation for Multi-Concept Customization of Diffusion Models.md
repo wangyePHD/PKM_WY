@@ -4,7 +4,7 @@ title: >-
   Mix-of-Show: Decentralized Low-Rank Adaptation for Multi-Concept Customization
   of Diffusion Models
 desc: ''
-updated: 1706941926254
+updated: 1710227484093
 created: 1706939844514
 ---
 
@@ -24,7 +24,7 @@ created: 1706939844514
 本文分别从上述两个问题出发，提出了一种新的多概念定制化方法——Mix-of-Show。
 
 
-## Method
+## Method 
 
 首先作者团队分析了，text token embedding和LoRA weights在概念学习上的不同倾向。如下图所示：
 
