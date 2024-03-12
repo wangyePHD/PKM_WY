@@ -2,7 +2,7 @@
 id: db1jfeu79xdg0z28yg7i7o6
 title: HyperDreambooth
 desc: ''
-updated: 1710126053468
+updated: 1710232008768
 created: 1710124813825
 ---
 
@@ -26,8 +26,6 @@ created: 1710124813825
 * 第一个阶段：在CelebA-HQ数据集上，针对每个身份ID，训练一个轻量级LiLoRA（r=1），得到每个身份ID的预训练的权重
 * 第二个阶段：超网络的作用是从单张人脸参考图像预测LiLoRA的初始始权重，这里包括UNet的交叉注意力和自注意力层，以及text Encoder自注意力层和前馈层。通过两个损失函数进行监督，一个常规的扩散损失函数，另一个是L2损失函数，即以第一阶段训练的轻量级LiLoRA为监督信息。
 * 第三个阶段：快速微调，给定一张人脸参考图，根据超网络预测LiLoRA的初始权重，合并到基础模型，然后使用高秩LoRA进一步微调，即Rank Relaxation，以提高生成图像的逼真度。
-
-
 
 ## Insight
 

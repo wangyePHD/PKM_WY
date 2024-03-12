@@ -14,7 +14,7 @@ created: 1698587714895
 
 
 ## **实验概述**
-在本实验中，我们替换了之前实验[[02_Projects.2023_SubConcept_Inversion.Experiments.mask_loss_idea]]中的cross-attention，而是使用了self-attention与mask构建loss。
+在本实验中，我们替换了之前实验[[02_Projects.01 科研项目.2023_SubConcept_Inversion.Experiments.mask_loss_idea]]中的cross-attention，而是使用了self-attention与mask构建loss。
 
 ## **实验代码及训练细节**
 * 实验代码：[wandb本次实验代码备份](https://wandb.ai/wangye889905/shapeinversion_baseline_v3_mask_loss_idea/runs/txy0ni88/code?workspace=user-wangye889905)

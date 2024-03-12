@@ -211,7 +211,7 @@ debug_update_K_V_custom_diffusion_2023-12-01-22.16
 
 * 验证当前有效果的原因是什么？
   * LayerNorm的作用？
-    * [[02_Projects.2023_SubConcept_Inversion.Experiments.Appearance_inversion_LayerNorm的作用、]]
+    * [[02_Projects.01 科研项目.2023_SubConcept_Inversion.Experiments.Appearance_inversion_LayerNorm的作用、]]
   * Lr的原因吗？
   * Domain-class-token的原因吗？
 

@@ -8,7 +8,7 @@ created: 1698405283881
 
 
 ## **实验概述**
-本实验是在[[02_Projects.2023_SubConcept_Inversion.Experiments.e4t_baseline_exp]]的基础上，添加Mask Loss，同时研究不同weight下的Mask Loss，对实验的影响。
+本实验是在[[02_Projects.01 科研项目.2023_SubConcept_Inversion.Experiments.e4t_baseline_exp]]的基础上，添加Mask Loss，同时研究不同weight下的Mask Loss，对实验的影响。
 （注意baseline实验指的是，prompt是... chair in the shape of *s）
 
 
@@ -58,7 +58,7 @@ created: 1698405283881
 ---
 ## **实验结论**
 
-1. **Mask Loss能够很好的保持物体原始的结构**，相对于[[02_Projects.2023_SubConcept_Inversion.Experiments.e4t_baseline_exp]]未使用Mask Loss来说，我们生成的物体的shape基本符合原始shape。
+1. **Mask Loss能够很好的保持物体原始的结构**，相对于[[02_Projects.01 科研项目.2023_SubConcept_Inversion.Experiments.e4t_baseline_exp]]未使用Mask Loss来说，我们生成的物体的shape基本符合原始shape。
 
 2. **Mask Loss Weight不能太大**，我们对比了两组0.1和1.0，发现0.1更好些，过大的weight，会导致模型过于专注于学习mask-shape，而忽略了本身物体的内容。
 

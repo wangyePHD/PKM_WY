@@ -68,7 +68,7 @@ created: 1698457898556
     * 基于得到的inversion shape和appearance实现真实图像的editing
   * 基于上述分析，我觉得目前还是要比现阶段的inversion方式进行总结和消耗，找到问题所在。
 * **2023年10月28日14:35:05 Shapeinversion架构分析**:
-  * [[02_Projects.2023_SubConcept_Inversion.Experiments.mask_loss_idea_analysis]]
+  * [[02_Projects.01 科研项目.2023_SubConcept_Inversion.Experiments.mask_loss_idea_analysis]]
 
 * **2023年10月28日16:56:41 我们的想法和Image2Image translation的区别**
   * 根据General Image-to-Image Translation with One-Shot Image Guidance这篇论文中叙述的那样，Translation并不改变source image的structure和semantic layout。但是要把target图上的concept反映到source图上。
