@@ -2,7 +2,7 @@
 id: 9274tgsqhl77vmzoy51h8ir
 title: 第三周
 desc: ''
-updated: 1710229731475
+updated: 1710306613995
 created: 1709947413185
 ---
 
@@ -155,30 +155,66 @@ DreamIdentity:可编辑性和身份保持之间应该是trade o
 
 ## TODO
 
-* Midjouney 产品跟进
+## Doing
+
+## Done
+* 跟进最新行业资讯
+* 整理Arxiv论文
 * 小红书内容更新
 * 补充材料：参数改成表格形式
-* 论文写作经验总结 语气词篇
-* 整理Arxiv论文
 * 多人一致性论文阅读
+
+
+## Backlog
+
 * 从代码角度学习一下lora的原理，进行实践
 * 其他
   * 理解最小二乘法，之后回看Custom Diffusion和Make-of-Show的论文
 
-## Doing
 
-
-## Done
-* 跟进最新行业资讯
-
-## Backlog
+* Midjouney 产品跟进
+* 论文写作经验总结 语气词篇
+* 爸妈保险报销流程记录
+  * 形成图像，保存到手机中和云端
 
 
 ## Note
 * SDXL这个模型 需要去了解了。
 * In [10], authors discuss fusing multiple concept LoRAs, however, it is an expensive method that requires retraining as it does not merge LoRAs but rather re-trains the entire model. 这是ZipLoRA中队Mix-of-Show的评价。
 
-
 ---
 
 
+## 2024.03.13 
+
+## TODO
+
+* 完成昨日的遗留工作
+  * 论文写作经验总结 语气词篇
+* Midjouney 产品跟进
+* 公众号新闻跟进
+* Arxiv整理
+* 从代码角度学习一下lora的原理，进行实践
+* 其他
+  * 理解最小二乘法，之后回看Custom Diffusion和Make-of-Show的论文
+* 多人定制化论文阅读
+
+## Doing
+* 
+
+
+
+## Done
+* 听报告
+  * 擦 也没听懂个啥
+* 爸妈保险报销流程记录
+
+
+## Backlog
+
+
+
+## Note
+
+
+---
