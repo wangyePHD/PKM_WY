@@ -2,7 +2,7 @@
 id: c92camsy4i8ktaeacf8lvmn
 title: 第5周
 desc: ''
-updated: 1711334403948
+updated: 1711433946888
 created: 1711241365369
 ---
 
@@ -70,25 +70,23 @@ SD 加速
 
 ## TODO
 
-* 测试模型，更新实验结果
+
 * 测试对比模型，验证ControlNet的具体作用是什么
 * 根据上两项实验，确定下一步要做的实验
 * Arxiv更新
 * 公众号更新
-* 简历最终版本更新
-* 调研Link prediction的SOTA工作，补一些基础知识
+
 
 ## Doing
-
-
 
 ## Done
 * Magicme推广视频更新
 * Magicme知乎更新
-
-
+* 测试模型，更新实验结果
+* 小红书发两条视频
+* 简历最终版本更新
+* 调研Link prediction的SOTA工作，补一些基础知识
 ## Backlog
-
 
 
 ## Notes    
@@ -99,6 +97,11 @@ SD 加速
 
 ## TODO
 
+* 筛选2人的图像数据, 改写model，跑新的实验
+* 按照飞书安排，进行下一步实验
+* Arxiv论文更新
+* 公众号更新
+* 其他
 
 
 ## Doing
@@ -107,8 +110,14 @@ SD 加速
 
 ## Done
 
-
-
+* 测试对比模型的效果，看看ControlNet的具体作用是什么
+* 继续训练对比模型，今天给出结论
+  * ControlNet是否有效
+* 检查训练代码，看看是否有问题
+* 看一下Mix-of-Show和MultiControlNet的条件设置
+  * Mix-of-show也是一张pose图，有多个pose而已。
+  * MultiControlNet是多个条件，和我们不一样的setting。
+* 重新构建ResampleNet
 ## Backlog
 
 
